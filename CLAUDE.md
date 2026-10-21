@@ -91,6 +91,11 @@ Never hand-edit generated files; fix the pipeline or the raw data instead.
   (`python -m http.server 5173`) and open `http://localhost:5173/src/`.
   Opening `src/index.html` directly from disk also works, because the build emits
   `data/build/data.js` (`window.APP_DATA = …`) alongside `data.json`.
+- **Phone / shareable build:** `node scripts/bundle.mjs` inlines everything into
+  `dist/jade.html` (gitignored), which is published as a private claude.ai artifact:
+  https://claude.ai/artifact/NBDUjVAAHj41nSNnLkBdVd. Re-bundle and republish after UI changes.
+- **Look:** flat, fully opaque jade (`--jade: #2b9b70`) with no gradient or shading;
+  hovered words turn deep jade (`--hover`).
 - **Data is hand-curated for now:** `data/raw/sentences.txt` (34 pre-segmented
   sentences + English), `words.tsv`, `chars.tsv`. The HSK Vocab sheet and grammar
   chart have **not** been added yet. When they arrive, replace the curated TSVs

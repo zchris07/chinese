@@ -1,11 +1,11 @@
 :root {
-  --jade: #0f7a5a;
-  --jade-deep: #095741;
+  --jade: #2b9b70;
+  --jade-deep: #0c4a37;
   --ink: #ffffff;
   --ink-soft: rgba(255, 255, 255, 0.72);
-  --ink-faint: rgba(255, 255, 255, 0.45);
-  --hover: #b9f0d6;
-  --armed: #d9ffb0;
+  --ink-faint: rgba(255, 255, 255, 0.62);
+  --hover: #0c4a37;
+  --armed: #fff3a6;
   --panel: rgba(0, 0, 0, 0.14);
   --zh: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
   --ui: 'Inter', system-ui, sans-serif;
@@ -19,8 +19,7 @@ body.trad { --zh: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif; }
 html, body { height: 100%; margin: 0; }
 
 body {
-  background: radial-gradient(ellipse at 50% 40%, var(--jade) 0%, var(--jade-deep) 100%) fixed;
-  background-color: var(--jade);
+  background: var(--jade);
   color: var(--ink);
   font-family: var(--ui);
   overflow: hidden;
@@ -31,7 +30,10 @@ body {
 
 /* Controls — quiet until hovered */
 .controls {
-  position: fixed; top: 16px; right: 16px; left: 16px;
+  position: fixed;
+  top: calc(16px + env(safe-area-inset-top, 0px));
+  right: calc(16px + env(safe-area-inset-right, 0px));
+  left: calc(16px + env(safe-area-inset-left, 0px));
   display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px;
   opacity: 0.55; transition: opacity var(--t); z-index: 10;
 }
@@ -58,7 +60,7 @@ body {
   padding: 0 24px; text-align: center;
   transition: opacity var(--t), filter var(--t);
 }
-#stage.away { opacity: 0; filter: blur(4px); pointer-events: none; }
+#stage.away { opacity: 0; pointer-events: none; }
 #stage.swap .sentence, #stage.swap .translation { opacity: 0; transform: translateY(6px); }
 
 .sentence {
@@ -82,7 +84,7 @@ body.pinyin .tok .py { display: block; }
 .tok.word, .tok.char { cursor: pointer; }
 .tok .hz { transition: color 140ms ease, text-shadow 140ms ease; }
 @media (hover: hover) {
-  .tok.word:hover .hz, .tok.char:hover .hz { color: var(--hover); text-shadow: 0 0 24px rgba(185, 240, 214, 0.35); }
+  .tok.word:hover .hz, .tok.char:hover .hz { color: var(--hover);  }
 }
 .tok.armed .hz { color: var(--armed); }
 
@@ -116,7 +118,7 @@ body.english .translation { visibility: visible; }
 .fview.char-view .big { font-size: clamp(5rem, min(26vw, 26vh), 14rem); }
 .fview .big .ch { cursor: pointer; transition: color 140ms ease, text-shadow 140ms ease; }
 @media (hover: hover) {
-  .fview .big .ch:hover { color: var(--hover); text-shadow: 0 0 30px rgba(185, 240, 214, 0.35); }
+  .fview .big .ch:hover { color: var(--hover);  }
 }
 .fview .big .ch.armed { color: var(--armed); }
 
@@ -147,7 +149,7 @@ body.english .translation { visibility: visible; }
 .crumbs { font-size: 12px; color: var(--ink-faint); margin-bottom: 10px; letter-spacing: 0.06em; font-family: var(--zh), var(--ui); }
 
 .hint {
-  position: fixed; bottom: 14px; left: 0; right: 0; text-align: center;
+  position: fixed; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); left: 16px; right: 16px; text-align: center;
   font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; pointer-events: none;
 }
 
