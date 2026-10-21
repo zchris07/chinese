@@ -84,15 +84,40 @@ Never hand-edit generated files; fix the pipeline or the raw data instead.
 - Open question to resolve first: whether the vocab sheet follows HSK 2.0 (levels 1–6)
   or HSK 3.0 (levels 1–9). Do not assume; check and record the answer here.
 
-## Suggested layout
+## Current state (first prototype build)
+
+- **Stack chosen:** plain HTML/CSS/JS, no framework, no bundler. Stay with it.
+- **Run it:** `node scripts/build.mjs` (rebuilds data), then serve the repo root
+  (`python -m http.server 5173`) and open `http://localhost:5173/src/`.
+  Opening `src/index.html` directly from disk also works, because the build emits
+  `data/build/data.js` (`window.APP_DATA = …`) alongside `data.json`.
+- **Data is hand-curated for now:** `data/raw/sentences.txt` (34 pre-segmented
+  sentences + English), `words.tsv`, `chars.tsv`. The HSK Vocab sheet and grammar
+  chart have **not** been added yet. When they arrive, replace the curated TSVs
+  with a cleaning step in `scripts/` that produces the same shape.
+- **HSK version:** the curated levels approximate **HSK 2.0 (1–6)** and were
+  hand-assigned. The open question about the real vocab sheet is still unresolved.
+- **Difficulty buckets:** simple = HSK 1–2, conversational = 3–4, difficult = 5–6.
+- **Build output shape** (`data/build/data.json`):
+  - `sentences[]`: `{ id, s, t, en, level, tokens: [{ w, t, py, kind: 'word'|'char'|'punct' }] }`
+  - `words{simplified}`: `{ t, py: [syllable…], hsk, defs: [...] }` — one syllable per character
+  - `chars{simplified}`: `{ m, words: [simplified…] }` — reverse index, sorted by HSK
+- The build fails on any token missing from `words.tsv` or any character missing from `chars.tsv`.
+- **UI:** the zoom is a stack (`word` → `char` → related `word` → …). Esc or
+  click-away pops one level; Space resets to a new sentence. Glyphs fly between
+  levels with a FLIP transform. Keys: P pinyin, S script, E English.
+- **Not yet handled:** contextual pinyin (tone sandhi such as 一/不, and polyphonic
+  characters come from the word entry, not the sentence context).
+
+## Layout
 
 ```
 CLAUDE.md
-README.md
-data/raw/        # original sheets and downloaded corpora
-data/build/      # generated JSON consumed by the app
-scripts/         # offline pipeline: clean, segment, score, translate, export
-src/             # front end
+data/raw/        # curated TSV/TXT now; original sheets and corpora later
+data/build/      # generated JSON (+ data.js) consumed by the app — do not hand-edit
+scripts/         # offline pipeline (build.mjs: validate + export)
+src/             # front end: index.html, style.css, app.js
+.claude/         # launch.json for the local preview server
 ```
 
 ## Working conventions
