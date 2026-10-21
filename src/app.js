@@ -87,7 +87,6 @@
       <div class="big" lang="zh">${chs}</div>
       <div class="meta">HSK ${w.hsk} · ${single ? 'single character' : 'word'}</div>
       <ul class="defs">${w.defs.map((d) => `<li>${d}</li>`).join('')}</ul>
-      <div class="note">${single ? 'Click the character' : 'Click a character'} to look closer · Esc to step back</div>
     </div>`;
   }
 
