@@ -94,7 +94,7 @@ Never hand-edit generated files; fix the pipeline or the raw data instead.
 - **Phone / shareable build:** `node scripts/bundle.mjs` inlines everything into
   `dist/jade.html` (gitignored), which is published as a private claude.ai artifact:
   https://claude.ai/artifact/NBDUjVAAHj41nSNnLkBdVd. Re-bundle and republish after UI changes.
-- **Look:** flat, fully opaque jade (`--jade: #2b9b70`) with no gradient or shading;
+- **Look:** bold sans (Noto Sans SC/TC 700, subway-sign style), pinyin on by default, flat, fully opaque jade (`--jade: #2b9b70`) with no gradient or shading;
   hovered words turn deep jade (`--hover`).
 - **Data is hand-curated for now:** `data/raw/sentences.txt` (34 pre-segmented
   sentences + English), `words.tsv`, `chars.tsv`. The HSK Vocab sheet and grammar
@@ -109,7 +109,8 @@ Never hand-edit generated files; fix the pipeline or the raw data instead.
   - `chars{simplified}`: `{ m, words: [simplified…] }` — reverse index, sorted by HSK
 - The build fails on any token missing from `words.tsv` or any character missing from `chars.tsv`.
 - **UI:** the zoom is a stack (`word` → `char` → related `word` → …). Esc or
-  click-away pops one level; Space resets to a new sentence. Glyphs fly between
+  click-away pops one level; Space or the big button under the sentence gives a new one.
+  A single click/tap on a word opens it (no tap-to-arm step). Glyphs fly between
   levels with a FLIP transform. Keys: P pinyin, S script, E English.
 - **Not yet handled:** contextual pinyin (tone sandhi such as 一/不, and polyphonic
   characters come from the word entry, not the sentence context).

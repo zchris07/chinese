@@ -11,17 +11,16 @@
   const settings = load();
   let current = null;
   let stack = []; // zoom levels above the sentence: {type:'word', w, tokenIndex?} | {type:'char', w, ci}
-  let lastPointer = 'mouse';
   let renderId = 0;
 
   // ---------- settings ----------
   function load() {
-    const defaults = { difficulty: 'simple', pinyin: false, trad: false, english: false };
-    try { return { ...defaults, ...JSON.parse(localStorage.getItem('jade-settings') || '{}') }; }
+    const defaults = { difficulty: 'simple', pinyin: true, trad: false, english: false };
+    try { return { ...defaults, ...JSON.parse(localStorage.getItem('jade-settings-v2') || '{}') }; }
     catch { return defaults; }
   }
   function save() {
-    try { localStorage.setItem('jade-settings', JSON.stringify(settings)); } catch {}
+    try { localStorage.setItem('jade-settings-v2', JSON.stringify(settings)); } catch {}
   }
   function applySettings() {
     document.body.classList.toggle('pinyin', settings.pinyin);
@@ -164,28 +163,16 @@
     setTimeout(() => { if (id === renderId) focus.innerHTML = ''; }, animate ? 340 : 0);
   }
 
-  // ---------- touch: tap = highlight, tap again = open ----------
   function disarm() {
     document.querySelectorAll('.armed').forEach((el) => el.classList.remove('armed'));
   }
-  function activate(el, open) {
-    if (lastPointer === 'touch' && !el.classList.contains('armed')) {
-      disarm();
-      el.classList.add('armed');
-      return;
-    }
-    open();
-  }
 
   // ---------- events ----------
-  document.addEventListener('pointerdown', (e) => { lastPointer = e.pointerType; }, true);
-
   sentenceEl.addEventListener('click', (e) => {
     const tok = e.target.closest('.tok.word, .tok.char');
     if (!tok) return;
     const t = current.tokens[tok.dataset.i];
-    activate(tok, () => push({ type: 'word', w: t.w, tokenIndex: Number(tok.dataset.i) },
-      tok.querySelector('.hz').getBoundingClientRect()));
+    push({ type: 'word', w: t.w, tokenIndex: Number(tok.dataset.i) }, tok.querySelector('.hz').getBoundingClientRect());
   });
 
   focus.addEventListener('click', (e) => {
@@ -193,7 +180,7 @@
     const ch = e.target.closest('.word-view .ch');
     const rel = e.target.closest('.related button');
     if (ch) {
-      activate(ch, () => push({ type: 'char', w: top.w, ci: Number(ch.dataset.ci) }, ch.getBoundingClientRect()));
+      push({ type: 'char', w: top.w, ci: Number(ch.dataset.ci) }, ch.getBoundingClientRect());
     } else if (rel) {
       if (rel.dataset.w === top.w) { pop(); return; }
       push({ type: 'word', w: rel.dataset.w }, rel.querySelector('.rw').getBoundingClientRect());
@@ -223,7 +210,7 @@
     nextSentence();
   });
   // Buttons should never keep focus, so Space can't re-trigger them.
-  document.querySelectorAll('.controls button').forEach((b) => b.addEventListener('click', () => b.blur()));
+  document.querySelectorAll('.controls button, #next').forEach((b) => b.addEventListener('click', () => b.blur()));
 
   window.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'SELECT' && e.code !== 'Space') return;
@@ -234,7 +221,6 @@
       pop();
     } else if (e.key === 'Enter' && e.target.matches('.tok, .ch')) {
       e.preventDefault();
-      lastPointer = 'keyboard';
       e.target.click();
     } else if (!e.ctrlKey && !e.metaKey && !e.altKey) {
       const k = { p: 'pinyin', s: 'trad', e: 'english' }[e.key.toLowerCase()];
