@@ -56,11 +56,13 @@ body {
 /* Sentence level */
 #stage {
   position: fixed; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 0 24px; text-align: center;
+  display: flex; overflow-y: auto;
+  padding: 72px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px));
+  text-align: center;
   transition: opacity var(--t), filter var(--t);
 }
 #stage.away { opacity: 0; pointer-events: none; }
+#stage .inner { margin: auto; width: 100%; display: flex; flex-direction: column; align-items: center; }
 #stage.swap .sentence, #stage.swap .translation { opacity: 0; transform: translateY(6px); }
 
 .sentence {
@@ -89,6 +91,20 @@ body.pinyin .tok .py { display: block; }
   .tok.word:hover .hz, .tok.char:hover .hz { color: var(--hover);  }
 }
 .tok.armed .hz { color: var(--armed); }
+
+/* Real-world passages: paragraph layout */
+.sentence.passage {
+  font-size: clamp(1.35rem, 3.8vw, 2.2rem);
+  line-height: 1.35; row-gap: 0.25em;
+  max-width: 30em; justify-content: flex-start; text-align: left;
+}
+.sentence .error { font: 500 1rem var(--ui); max-width: 24rem; text-align: center; }
+.tok.other { color: var(--ink-soft); }
+
+.source { margin: 1.4rem 0 0; font-size: 13px; color: var(--ink-faint); }
+.source:empty { display: none; }
+.source a { color: var(--ink-soft); }
+.translation.missing { font-style: italic; color: var(--ink-faint); }
 
 .translation {
   margin: 1.6rem 0 0; max-width: 36rem;
@@ -166,3 +182,5 @@ body.english .translation { visibility: visible; }
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: 1ms !important; animation-duration: 1ms !important; }
 }
+
+.sentence.passage + .translation { text-align: left; max-width: 44rem; width: 100%; }

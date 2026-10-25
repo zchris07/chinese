@@ -17,6 +17,7 @@
         <option value="simple">Simple · HSK 1–2</option>
         <option value="conversational">Conversational · HSK 3–4</option>
         <option value="difficult">Difficult · HSK 5–6</option>
+        <option value="wiki">Real-world · Wikipedia</option>
       </select>
     </label>
     <button class="toggle" id="t-pinyin" aria-pressed="false" title="Pinyin (P)">pīn</button>
@@ -25,9 +26,12 @@
   </header>
 
   <main id="stage">
-    <div id="sentence" class="sentence" lang="zh"></div>
-    <p id="translation" class="translation"></p>
-    <button class="new" id="next" title="New sentence (Space)">New sentence ↻</button>
+    <div class="inner">
+      <div id="sentence" class="sentence" lang="zh"></div>
+      <p id="translation" class="translation"></p>
+      <button class="new" id="next" title="New (Space)">New sentence ↻</button>
+      <p id="source" class="source"></p>
+    </div>
   </main>
 
   <section id="focus" class="focus" aria-live="polite"></section>

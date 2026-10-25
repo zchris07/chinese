@@ -1,5 +1,6 @@
 // Inlines src/ + data/build/data.js into one page fragment (dist/jade.html)
 // for publishing as a claude.ai artifact, which supplies its own <html>/<head>/<body>.
+// Wikipedia passages stay separate: publish data/build/wiki/* alongside it as wiki/*.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -21,6 +22,7 @@ ${read('src/style.css')}
 </style>
 ${body}
 <script>${safe(read('data/build/data.js'))}</script>
+<script>window.WIKI_BASE = 'wiki/';</script>
 <script>
 ${safe(read('src/app.js'))}
 </script>

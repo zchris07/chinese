@@ -112,8 +112,44 @@ Never hand-edit generated files; fix the pipeline or the raw data instead.
   click-away pops one level; Space or the big button under the sentence gives a new one.
   A single click/tap on a word opens it (no tap-to-arm step). Glyphs fly between
   levels with a FLIP transform. Keys: P pinyin, S script, E English.
-- **Not yet handled:** contextual pinyin (tone sandhi such as 一/不, and polyphonic
+- **Not yet handled (curated set):** contextual pinyin (tone sandhi such as 一/不, and polyphonic
   characters come from the word entry, not the sentence context).
+
+## Real-world passages (Wikipedia pilot)
+
+Goal: a **huge** pool of real paragraphs, fully analyzable like the curated
+sentences. Sources are limited to text we can legally ship. The pilot is
+**Wikipedia only**. Poetry, literature, news, lyrics and social media are out for now.
+
+- **Difficulty option:** "Real-world · Wikipedia" (`difficulty: 'wiki'`) shows a
+  random multi-sentence passage with a source/license line. Word and character
+  drill-down work the same as for sentences.
+- **Pipeline** (Python, in `scripts/wiki/`; `pip install jieba pypinyin opencc-python-reimplemented requests anthropic`):
+  1. `download.py`: CC-CEDICT + the MIT `complete-hsk-vocabulary` list into `data/raw/`.
+  2. `fetch.py --count 350`: random featured articles (典范条目) via the MediaWiki API
+     → `data/raw/wiki/articles.jsonl`. Random articles are mostly stubs, so we sample featured ones.
+  3. `process.py`: clean (to simplified, strip romanized parentheticals and refs),
+     pick paragraphs of 2–6 sentences / 50–360 chars, split words with jieba (unknown
+     compounds split greedily into CC-CEDICT words), add citation-tone pinyin (pypinyin,
+     no sandhi), traditional via OpenCC, definitions from CC-CEDICT (matching reading
+     first), levels from HSK 2.0 (`old-N`; 7 = HSK 3.0 7–9 only; missing = beyond HSK).
+     Rejects passages where >2% of characters are missing from CC-CEDICT.
+  4. `translate.py`: English per sentence via the Message Batches API (one request
+     per passage, structured JSON output), cached in `data/raw/wiki/translations.jsonl`
+     (committed, keyed by sha1 of the sentence). Re-run `process.py` to merge.
+     Needs Anthropic credentials. **Not run yet**, so the pilot passages have no English.
+- **Output:** `data/build/wiki/index.json` + `shard-NNN.json` (50 passages each, with
+  their own `words`/`chars` tables, merged into the app's lookup on load). Passage:
+  `{ id, source: { type, title, url, license }, stats: { tokens, beyondHsk, hsk5plus },
+  sentences: [{ s, t, en, tokens: [{ w, t?, py ('mì shū chù'), kind }] }] }`.
+  `t` is omitted when equal to the simplified text; `kind` adds `other` (Latin/digits).
+- **Not committed:** raw dictionaries, fetched articles and `data/build/wiki/`
+  (regenerate with the steps above). The translation cache is committed because it costs money to rebuild.
+- **Hosting:** the app `fetch()`es shards, so it must be served over http. The phone
+  artifact publishes `data/build/wiki/*` as `wiki/*` next to the page (`window.WIKI_BASE`).
+  At full scale move to GitHub Pages or Cloudflare Pages, since the artifact has a size cap.
+- **Attribution:** Wikipedia text is CC BY-SA 4.0 and each passage links to its
+  article. CC-CEDICT is CC BY-SA 4.0. The HSK list is MIT.
 
 ## Layout
 

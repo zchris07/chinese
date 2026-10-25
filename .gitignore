@@ -1,1 +1,6 @@
 dist/
+data/raw/cedict/
+data/raw/hsk/
+data/raw/wiki/articles.jsonl
+data/raw/wiki/pending.jsonl
+data/build/wiki/
