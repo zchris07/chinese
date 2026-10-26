@@ -1,0 +1,205 @@
+severity,issue,word,sheet_level,sheet_value,reference_value,note
+high,missing_word,一路,,,HSK2.0 L5,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,休养,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,倘若,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,分之,,,HSK2.0 L4,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,刮,,,HSK2.0 L3,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,刷,,,HSK2.0 L3,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,名胜,,,HSK2.0 L5,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,团圆,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,弹,,,HSK2.0 L4,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,散布,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,涮,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,烟花,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,片断,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,电子,,,HSK2.0 L3,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,素食,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,花瓣,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,踢,,,HSK2.0 L2,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,通货,,,HSK2.0 L6,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+high,missing_word,高速,,,HSK2.0 L5,"in complete-hsk-vocabulary HSK 2.0 list, absent from sheet"
+medium,extra_or_variant_word,…分之…,4,fen1 zhi1,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,一路平安,5,yi2 lu4 ping2 an1,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,修养,6,xiu1 yang3,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,刮风,3,gua1 feng1,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,刷牙,3,shua1 ya2,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,名胜古迹,5,ming2 sheng4 gu3 ji4,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,哪儿,1,na3 r5,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,团员,6,tuan2 yuan2,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,弹钢琴,4,tan2 gang1 qin2,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,志愿者,5,zhi4 yuan4 zhe3,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,涮火锅,6,shuan4 huo3 guo1,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,烟花爆竹,6,yan1 hua1 bao4 zhu2,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,片段,6,pian4 duan4,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,电子邮件,3,dian4 zi3 you2 jian4,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,畏,5,wei4,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,相连,5,xiang1 lian2,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,称,5,cheng1,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,素食主义,6,su4 shi2 zhu3 yi4,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,踢足球,2,ti1 zu2 qiu2,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,这儿,1,zhe4 r5,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,通货膨胀,6,tong1 huo4 peng2 zhang4,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,那儿,1,na4 r5,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+medium,extra_or_variant_word,高速公路,5,gao1 su4 gong1 lu4,,"not in HSK 2.0 list (often an expanded collocation, e.g. 踢→踢足球)"
+high,level_mismatch,过,5/2,,HSK2.0 L4,
+high,level_mismatch,像,5,,HSK2.0 L3,
+high,level_mismatch,倍,5,,HSK2.0 L4,
+high,level_mismatch,事情,5,,HSK2.0 L2,
+high,level_mismatch,看来,6,,HSK2.0 L5,
+high,level_mismatch,马上,2,,HSK2.0 L3,
+high,level_mismatch,为,3,,HSK2.0 L2,
+high,level_mismatch,起来,5,,HSK2.0 L4,
+high,level_mismatch,被,4,,HSK2.0 L3,
+high,level_mismatch,圆,2,,HSK2.0 L4,
+high,level_mismatch,向,3,,HSK2.0 L2,
+high,level_mismatch,脏,5,,HSK2.0 L4,
+high,level_mismatch,各自,6,,HSK2.0 L5,
+high,level_mismatch,更,5,,HSK2.0 L3,
+high,level_mismatch,扇子,6,,HSK2.0 L5,
+high,level_mismatch,孝顺,6,,HSK2.0 L5,
+high,level_mismatch,元,4,,HSK2.0 L2,
+high,level_mismatch,对,2/2,,HSK2.0 L4,
+high,level_mismatch,从,5,,HSK2.0 L2,
+high,level_mismatch,水果,2,,HSK2.0 L1,
+high,level_mismatch,孙子,5,,HSK2.0 L4,
+high,level_mismatch,几,3,,HSK2.0 L1,
+high,level_mismatch,刚刚,6,,HSK2.0 L4,
+high,level_mismatch,狮子,6,,HSK2.0 L4,
+high,level_mismatch,近,3,,HSK2.0 L2,
+high,level_mismatch,项,6,,HSK2.0 L5,
+high,level_mismatch,上,5,,HSK2.0 L1,
+high,level_mismatch,别人,6,,HSK2.0 L3,
+high,level_mismatch,部分,5,,HSK2.0 L4,
+high,level_mismatch,趟,5,,HSK2.0 L4,
+high,level_mismatch,地道,6,,HSK2.0 L5,
+high,level_mismatch,后面,6,,HSK2.0 L1,
+high,level_mismatch,结果,6,,HSK2.0 L4,
+high,level_mismatch,小气,6,,HSK2.0 L5,
+high,level_mismatch,故事,5,,HSK2.0 L3,
+high,level_mismatch,脾气,6,,HSK2.0 L4,
+high,level_mismatch,背,3,,HSK2.0 L5,
+high,level_mismatch,场,6,,HSK2.0 L4,
+high,level_mismatch,累,5,,HSK2.0 L2,
+high,level_mismatch,与,5,,HSK2.0 L4,
+high,level_mismatch,知道,5,,HSK2.0 L2,
+high,level_mismatch,受到,5,,HSK2.0 L4,
+high,level_mismatch,看,3,,HSK2.0 L1,
+high,level_mismatch,翻,6,,HSK2.0 L5,
+high,level_mismatch,干,5,,HSK2.0 L4,
+high,level_mismatch,为什么,2,,HSK2.0 L3,
+low,pinyin_error,嗯,6,ńg,ng4 / en4,
+medium,pinyin_format,嗯,6,ńg,numbered pinyin,
+low,pinyin_tone_sandhi_written,一辈子,5,yi2 bei4 zi5,yi1 bei4 zi5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,略微,6,lve4 wei1,lüe4 wei1,
+low,pinyin_tone_sandhi_written,一会儿,3,yi2 hui4 r5,yi1 hui4 r5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一向,6,yi2 xiang4,yi1 xiang4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一共,3,yi2 gong4,yi1 gong4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,看来,6,kan4 lai2,kan4 lai5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,大不了,6,da4 bu4 liao3,da4 bu5 liao3,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不愧,6,bu2 kui4,bu4 kui4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,起来,5,qi3 lai2,qi3 lai5 | qi5 lai5,"normalize: store citation tones, compute sandhi in display"
+low,not_in_cedict,纽扣儿,6,niu3 kou4 r5,,collocation or non-dictionary form
+low,pinyin_umlaut_as_v,无忧无虑,6,wu2 you1 wu2 lv4,wu2 you1 wu2 lü4,
+high,pinyin_error,动画片,5,dong4 hua4 pian1,dong4 hua4 pian4,
+low,pinyin_neutral_tone_differs,情形,6,qing2 xing2,qing2 xing5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,伴侣,6,ban4 lv3,ban4 lü3,
+low,pinyin_tone_sandhi_written,一贯,6,yi2 guan4,yi1 guan4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,女儿,1,nv3 er2,nü3 er2,
+low,pinyin_neutral_tone,正经,6,zheng4 jing5,zheng4 jing1,
+low,pinyin_umlaut_as_v,纪律,5,ji4 lv4,ji4 lü4,
+low,pinyin_neutral_tone_differs,码头,6,ma3 tou2,ma3 tou5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,效率,5,xiao4 lv4,xiao4 lü4,
+low,pinyin_umlaut_as_v,汇率,5,hui4 lv4,hui4 lü4,
+low,pinyin_neutral_tone,孝顺,6,xiao4 shun5,xiao4 shun4,
+low,pinyin_neutral_tone_differs,味道,4,wei4 dao4,wei4 dao5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一度,6,yi2 du4,yi1 du4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,频率,6,pin2 lv4,pin2 lü4,
+high,pinyin_error,光滑,5,guang1 hua5,guang1 hua2,
+low,pinyin_umlaut_as_v,绿,3,lv4,lü4,
+high,pinyin_error,兴高采烈,6,xing1 gao1 cai3 lie4,xing4 gao1 cai3 lie4,
+low,pinyin_neutral_tone_differs,脑袋,5,nao3 dai4,nao3 dai5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不耐烦,5,bu2 nai4 fan2,bu4 nai4 fan2,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一旦,5,yi2 dan4,yi1 dan4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不顾,6,bu2 gu4,bu4 gu4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一起,2,yi4 qi3,yi1 qi3,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,兴趣,3,xing4 qu5,xing4 qu4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,利率,6,li4 lv4,li4 lü4,
+low,pinyin_umlaut_as_v,侵略,5,qin1 lve4,qin1 lüe4,
+low,pinyin_neutral_tone_differs,笑话,4,xiao4 hua4,xiao4 hua5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,刚刚,6,gang1 gang1,gang1 gang5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,女士,5,nv3 shi4,nü3 shi4,
+low,pinyin_umlaut_as_v,法律,4,fa3 lv4,fa3 lü4,
+low,pinyin_umlaut_as_v,律师,4,lv4 shi1,lü4 shi1,
+low,pinyin_umlaut_as_v,旋律,6,xuan2 lv4,xuan2 lü4,
+low,pinyin_umlaut_as_v,顾虑,6,gu4 lv4,gu4 lü4,
+low,pinyin_neutral_tone_differs,恶心,6,e3 xin5,e3 xin1 | e4 xin1,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不必,5,bu2 bi4,bu4 bi4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不见得,5,bu2 jian4 de5,bu4 jian4 de5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一丝不苟,6,yi4 si1 bu4 gou3,yi1 si1 bu4 gou3,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不但,4,bu2 dan4,bu4 dan4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一目了然,6,yi2 mu4 liao3 ran2,yi1 mu4 liao3 ran2,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一举两得,6,yi4 ju3 liang3 de2,yi1 ju3 liang3 de2,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一边,3,yi4 bian1,yi1 bian1,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不过,4,bu2 guo4,bu4 guo4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,还是,3,hai2 shi4,hai2 shi5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone,固执,6,gu4 zhi5,gu4 zhi2,
+low,not_in_cedict,打篮球,2,da3 lan2 qiu2,,collocation or non-dictionary form
+low,not_in_cedict,踢足球,2,ti1 zu2 qiu2,,collocation or non-dictionary form
+low,not_in_cedict,弹钢琴,4,tan2 gang1 qin2,,collocation or non-dictionary form
+low,pinyin_neutral_tone,队伍,6,dui4 wu5,dui4 wu3,
+low,pinyin_neutral_tone_differs,后面,6,hou4 mian4,hou4 mian5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,道理,5,dao4 li3,dao4 li5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone,斯文,6,si1 wen5,si1 wen2,
+low,pinyin_neutral_tone_differs,爽快,6,shuang3 kuai4,shuang3 kuai5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,关系,3,guan1 xi4,guan1 xi5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一再,6,yi2 zai4,yi1 zai4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,屡次,6,lv3 ci4,lü3 ci4,
+low,pinyin_umlaut_as_v,规律,5,gui1 lv4,gui1 lü4,
+low,pinyin_tone_sandhi_written,一样,3,yi2 yang4,yi1 yang4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一般,3,yi4 ban1,yi1 ban1,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一律,6,yi2 lv4,yi1 lu:4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,一律,6,yi2 lv4,yi2 lü4,
+low,pinyin_tone_sandhi_written,一帆风顺,6,yi4 fan1 feng1 shun4,yi1 fan1 feng1 shun4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,苗条,5,miao2 tiao2,miao2 tiao5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone,小气,6,xiao3 qi5,xiao3 qi4,
+low,pinyin_umlaut_as_v,战略,6,zhan4 lve4,zhan4 lüe4,
+low,pinyin_neutral_tone_differs,太阳,3,tai4 yang2,tai4 yang5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,一定,3,yi2 ding4,yi1 ding4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,策略,6,ce4 lve4,ce4 lüe4,
+low,pinyin_neutral_tone,周到,5,zhou1 dao5,zhou1 dao4,
+low,not_in_cedict,系领带,5,ji4 ling3 dai4,,collocation or non-dictionary form
+high,pinyin_error,巴不得,6,ba1 bu4 de2,ba1 bu5 de5,
+low,pinyin_tone_sandhi_written,不屑一顾,6,bu2 xie4 yi1 gu4,bu4 xie4 yi1 gu4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,委屈,5,wei3 qu1,wei3 qu5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,过滤,6,guo4 lv4,guo4 lü4,
+low,pinyin_umlaut_as_v,履行,6,lv3 xing2,lü3 xing2,
+low,pinyin_tone_sandhi_written,一路平安,5,yi2 lu4 ping2 an1,yi1 lu4 ping2 an1,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone,泄露,6,xie4 lu4,xie4 lou4 (xie4 lu4 also heard),
+low,pinyin_umlaut_as_v,省略,5,sheng3 lve4,sheng3 lüe4,
+low,pinyin_umlaut_as_v,虐待,6,nve4 dai4,nüe4 dai4,
+low,pinyin_umlaut_as_v,忽略,6,hu1 lve4,hu1 lüe4,
+low,pinyin_umlaut_as_v,掠夺,6,lve4 duo2,lüe4 duo2,
+high,pinyin_error,抢劫,6,qiang1 jie2,qiang3 jie2,
+low,pinyin_neutral_tone_differs,伺候,6,ci4 hou4,ci4 hou5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,嘱咐,5,zhu3 fu4,zhu3 fu5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_neutral_tone_differs,吩咐,6,fen1 fu4,fen1 fu5,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_umlaut_as_v,考虑,4,kao3 lv4,kao3 lü4,
+low,pinyin_umlaut_as_v,旅游,2,lv3 you2,lü3 you2,
+low,pinyin_tone_sandhi_written,一致,5,yi2 zhi4,yi1 zhi4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不断,5,bu2 duan4,bu4 duan4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不料,6,bu2 liao4,bu4 liao4,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不要紧,5,bu2 yao4 jin3,bu4 yao4 jin3,"normalize: store citation tones, compute sandhi in display"
+low,pinyin_tone_sandhi_written,不像话,6,bu2 xiang4 hua4,bu4 xiang4 hua4,"normalize: store citation tones, compute sandhi in display"
+low,not_in_cedict,…分之…,4,fen1 zhi1,,collocation or non-dictionary form
+high,pinyin_error,恨不得,6,hen4 bu5 de2,hen4 bu5 de5,
+low,pinyin_umlaut_as_v,女人,2,nv3 ren2,nü3 ren2,
+low,pinyin_umlaut_as_v,妇女,5,fu4 nv3,fu4 nü3,
+low,pinyin_tone_sandhi_written,不客气,1,bu2 ke4 qi5,bu4 ke4 qi5,"normalize: store citation tones, compute sandhi in display"
+high,definition_wrong,理发,4,a barber; hairdressing,to get / give a haircut,
+high,definition_wrong,团结,6,a rally; to hold a rally; to join forces,to unite; unity; solidarity,
+high,definition_wrong,惯例,6,conventional,"convention; usual practice (sheet gives adjective ""conventional"")",
+high,definition_wrong,馋,6,slander; defame; misrepresent; to speak maliciously,gluttonous; greedy; to crave (sheet sense belongs to 谗),
+high,definition_wrong,兴隆,6,"Xinglong county in Chengde 承德[Cheng2 de2], Hebei",prosperous; thriving (sheet gives place name Xinglong County),
+high,definition_wrong,振兴,6,"Zhengxing district of Dandong city 丹東市|丹东市[Dan1 dong1 shi4], Liaoning",to revitalize (sheet gives Zhenxing District),
+info,definition_cleanup,(850 rows),,CL: classifier notes; 872 rows have bracketed pinyin refs; 75 defs >150 chars,split senses into a list; move classifiers to own column,
+info,missing_columns,(all),,,"traditional, tone-mark pinyin, POS, HSK 3.0 level, frequency",absent from sheet

@@ -1,0 +1,729 @@
+severity,issue,id,code,field,sheet_value,suggested_fix
+high,missing_structure,18,1.07.2,structure,,"e.g. ""N + AGE"" (omitting 是)"
+high,missing_example,232,4.04.2,example,-,write example
+high,missing_example,469,5.17.1,example,-,write example
+low,no_lesson_url,562,5.A01,url,,appendix rows
+low,no_lesson_url,563,5.A02,url,,appendix rows
+low,no_lesson_url,564,5.A02,url,,appendix rows
+low,no_lesson_url,565,5.A03,url,,appendix rows
+low,no_lesson_url,566,5.A04,url,,appendix rows
+low,no_lesson_url,567,5.A05,url,,appendix rows
+low,no_lesson_url,568,5.A06,url,,appendix rows
+low,no_lesson_url,569,5.A06,url,,appendix rows
+low,no_lesson_url,570,5.A07,url,,appendix rows
+low,no_lesson_url,571,5.A08,url,,appendix rows
+low,no_lesson_url,572,5.A09,url,,appendix rows
+low,no_lesson_url,573,5.A10,url,,appendix rows
+low,no_lesson_url,574,5.A11,url,,appendix rows
+low,no_lesson_url,575,5.A12,url,,appendix rows
+low,no_lesson_url,576,5.A13,url,,appendix rows
+low,no_lesson_url,577,5.A14,url,,appendix rows
+low,no_lesson_url,578,5.A15,url,,appendix rows
+high,pinyin_formula_error,693,7-9.001,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,693,7-9.001,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,694,7-9.001,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,694,7-9.001,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,695,7-9.002,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,695,7-9.002,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,696,7-9.002,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,696,7-9.002,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,697,7-9.003,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,697,7-9.003,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,698,7-9.003,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,698,7-9.003,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,699,7-9.003,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,699,7-9.003,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,700,7-9.004 (1),pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,700,7-9.004 (1),url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,701,7-9.004 (1),pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,701,7-9.004 (1),url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,702,7-9.004 (1),pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,702,7-9.004 (1),url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,703,7-9.004 (1),pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,703,7-9.004 (1),url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,704,7-9.004 (1),pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,704,7-9.004 (1),url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,705,7-9.004 (2),pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,705,7-9.004 (2),url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,706,7-9.005,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,706,7-9.005,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,707,7-9.005,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,707,7-9.005,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,708,7-9.006,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,708,7-9.006,url,,HSK 3.0 band has no course link
+high,english_formula_error,708,7-9.006,english,#VALUE!,write gloss
+high,pinyin_formula_error,709,7-9.006,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,709,7-9.006,url,,HSK 3.0 band has no course link
+high,english_formula_error,709,7-9.006,english,#VALUE!,write gloss
+high,pinyin_formula_error,710,7-9.007,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,710,7-9.007,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,711,7-9.007,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,711,7-9.007,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,712,7-9.008,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,712,7-9.008,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,713,7-9.008,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,713,7-9.008,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,714,7-9.009,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,714,7-9.009,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,715,7-9.009,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,715,7-9.009,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,716,7-9.010,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,716,7-9.010,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,717 (id blank),7-9.010,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,717 (id blank),7-9.010,url,,HSK 3.0 band has no course link
+medium,missing_id,717 (id blank),7-9.010,id,,assign 717
+high,pinyin_formula_error,718,7-9.011,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,718,7-9.011,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,719,7-9.011,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,719,7-9.011,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,720,7-9.012,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,720,7-9.012,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,721,7-9.012,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,721,7-9.012,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,722,7-9.013,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,722,7-9.013,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,723,7-9.013,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,723,7-9.013,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,724,7-9.014,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,724,7-9.014,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,725,7-9.014,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,725,7-9.014,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,726,7-9.015,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,726,7-9.015,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,727,7-9.015,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,727,7-9.015,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,728,7-9.016,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,728,7-9.016,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,729,7-9.016,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,729,7-9.016,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,730,7-9.017,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,730,7-9.017,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,731,7-9.017,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,731,7-9.017,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,732,7-9.018,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,732,7-9.018,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,733,7-9.018,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,733,7-9.018,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,734,7-9.019,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,734,7-9.019,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,735,7-9.019,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,735,7-9.019,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,736,7-9.020,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,736,7-9.020,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,737,7-9.020,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,737,7-9.020,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,738,7-9.021,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,738,7-9.021,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,739,7-9.021,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,739,7-9.021,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,740,7-9.022,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,740,7-9.022,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,741,7-9.022,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,741,7-9.022,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,742,7-9.023,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,742,7-9.023,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,743,7-9.023,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,743,7-9.023,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,744,7-9.024,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,744,7-9.024,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,745,7-9.024,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,745,7-9.024,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,746,7-9.025,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,746,7-9.025,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,747,7-9.025,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,747,7-9.025,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,748,7-9.026,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,748,7-9.026,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,749,7-9.026,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,749,7-9.026,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,750,7-9.027,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,750,7-9.027,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,751,7-9.027,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,751,7-9.027,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,752,7-9.028,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,752,7-9.028,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,753,7-9.028,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,753,7-9.028,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,754,7-9.029,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,754,7-9.029,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,755,7-9.029,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,755,7-9.029,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,756,7-9.030,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,756,7-9.030,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,757,7-9.030,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,757,7-9.030,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,758,7-9.031,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,758,7-9.031,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,759,7-9.031,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,759,7-9.031,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,760,7-9.032,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,760,7-9.032,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,761,7-9.032,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,761,7-9.032,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,762,7-9.033,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,762,7-9.033,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,763,7-9.033,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,763,7-9.033,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,764,7-9.034,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,764,7-9.034,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,765,7-9.034,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,765,7-9.034,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,766,7-9.035,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,766,7-9.035,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,767,7-9.035,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,767,7-9.035,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,768,7-9.036,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,768,7-9.036,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,769,7-9.036,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,769,7-9.036,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,770,7-9.037,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,770,7-9.037,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,771,7-9.037,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,771,7-9.037,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,772,7-9.038,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,772,7-9.038,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,773,7-9.038,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,773,7-9.038,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,774,7-9.039,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,774,7-9.039,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,775,7-9.039,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,775,7-9.039,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,776,7-9.040,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,776,7-9.040,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,777,7-9.040,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,777,7-9.040,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,778,7-9.041,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,778,7-9.041,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,779,7-9.041,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,779,7-9.041,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,780,7-9.042,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,780,7-9.042,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,781,7-9.042,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,781,7-9.042,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,782,7-9.043,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,782,7-9.043,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,783,7-9.043,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,783,7-9.043,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,784,7-9.044,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,784,7-9.044,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,785,7-9.044,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,785,7-9.044,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,786,7-9.045,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,786,7-9.045,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,787,7-9.045,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,787,7-9.045,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,788,7-9.046,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,788,7-9.046,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,789,7-9.046,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,789,7-9.046,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,790,7-9.047,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,790,7-9.047,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,791,7-9.047,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,791,7-9.047,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,792,7-9.048,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,792,7-9.048,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,793,7-9.048,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,793,7-9.048,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,794,7-9.049,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,794,7-9.049,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,795,7-9.049,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,795,7-9.049,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,796,7-9.050,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,796,7-9.050,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,797,7-9.050,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,797,7-9.050,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,798,7-9.051,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,798,7-9.051,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,799,7-9.051,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,799,7-9.051,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,800,7-9.052,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,800,7-9.052,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,801,7-9.052,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,801,7-9.052,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,802,7-9.053,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,802,7-9.053,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,803,7-9.053,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,803,7-9.053,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,804,7-9.054,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,804,7-9.054,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,805,7-9.054,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,805,7-9.054,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,806,7-9.055,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,806,7-9.055,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,807,7-9.055,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,807,7-9.055,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,808,7-9.055,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,808,7-9.055,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,809,7-9.055,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,809,7-9.055,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,810,7-9.056,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,810,7-9.056,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,811,7-9.056,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,811,7-9.056,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,812,7-9.057,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,812,7-9.057,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,813,7-9.057,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,813,7-9.057,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,814,7-9.058,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,814,7-9.058,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,815,7-9.058,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,815,7-9.058,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,816,7-9.059,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,816,7-9.059,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,817,7-9.059,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,817,7-9.059,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,818,7-9.060,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,818,7-9.060,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,819,7-9.060,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,819,7-9.060,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,820,7-9.061,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,820,7-9.061,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,821,7-9.061,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,821,7-9.061,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,822,7-9.062,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,822,7-9.062,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,823,7-9.062,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,823,7-9.062,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,824,7-9.063,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,824,7-9.063,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,825,7-9.063,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,825,7-9.063,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,826,7-9.064,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,826,7-9.064,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,827,7-9.064,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,827,7-9.064,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,828,7-9.065,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,828,7-9.065,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,829,7-9.065,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,829,7-9.065,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,830,7-9.066,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,830,7-9.066,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,831,7-9.066,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,831,7-9.066,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,832,7-9.067,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,832,7-9.067,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,833,7-9.067,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,833,7-9.067,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,834,7-9.068,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,834,7-9.068,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,835,7-9.068,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,835,7-9.068,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,836,7-9.069,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,836,7-9.069,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,837,7-9.069,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,837,7-9.069,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,838,7-9.070,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,838,7-9.070,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,839,7-9.070,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,839,7-9.070,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,840,7-9.071,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,840,7-9.071,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,841,7-9.071,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,841,7-9.071,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,842,7-9.072,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,842,7-9.072,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,843,7-9.072,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,843,7-9.072,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,844,7-9.072,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,844,7-9.072,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,845,7-9.072,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,845,7-9.072,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,846,7-9.073,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,846,7-9.073,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,847,7-9.073,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,847,7-9.073,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,848,7-9.074,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,848,7-9.074,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,849,7-9.074,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,849,7-9.074,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,850,7-9.075,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,850,7-9.075,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,853,7-9.076,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,853,7-9.076,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,854,7-9.076,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,854,7-9.076,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,855,7-9.077,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,855,7-9.077,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,856,7-9.077,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,856,7-9.077,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,857,7-9.078,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,857,7-9.078,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,858,7-9.078,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,858,7-9.078,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,859,7-9.079,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,859,7-9.079,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,860,7-9.079,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,860,7-9.079,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,861,7-9.079,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,861,7-9.079,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,862,7-9.079,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,862,7-9.079,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,863,7-9.080,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,863,7-9.080,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,864,7-9.080,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,864,7-9.080,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,865,7-9.081,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,865,7-9.081,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,866,7-9.081,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,866,7-9.081,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,867,7-9.082,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,867,7-9.082,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,868,7-9.082,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,868,7-9.082,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,869,7-9.082,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,869,7-9.082,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,870,7-9.082,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,870,7-9.082,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,871,7-9.083,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,871,7-9.083,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,872,7-9.083,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,872,7-9.083,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,873,7-9.084,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,873,7-9.084,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,874,7-9.084,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,874,7-9.084,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,875,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,875,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,876,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,876,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,877,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,877,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,878,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,878,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,879,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,879,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,880,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,880,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,881,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,881,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,882,7-9.085,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,882,7-9.085,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,883,7-9.086,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,883,7-9.086,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,884,7-9.086,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,884,7-9.086,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,885,7-9.086,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,885,7-9.086,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,886,7-9.086,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,886,7-9.086,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,887,7-9.087,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,887,7-9.087,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,888,7-9.087,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,888,7-9.087,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,889,7-9.088,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,889,7-9.088,url,,HSK 3.0 band has no course link
+high,english_formula_error,889,7-9.088,english,#VALUE!,write gloss
+high,pinyin_formula_error,890,7-9.088,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,890,7-9.088,url,,HSK 3.0 band has no course link
+high,english_formula_error,890,7-9.088,english,#VALUE!,write gloss
+high,pinyin_formula_error,891,7-9.089,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,891,7-9.089,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,892,7-9.089,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,892,7-9.089,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,893,7-9.089,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,893,7-9.089,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,894,7-9.089,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,894,7-9.089,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,895,7-9.090,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,895,7-9.090,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,896,7-9.090,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,896,7-9.090,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,897,7-9.090,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,897,7-9.090,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,898,7-9.090,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,898,7-9.090,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,899,7-9.090,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,899,7-9.090,url,,HSK 3.0 band has no course link
+high,english_formula_error,899,7-9.090,english,#VALUE!,write gloss
+high,pinyin_formula_error,900,7-9.090,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,900,7-9.090,url,,HSK 3.0 band has no course link
+high,english_formula_error,900,7-9.090,english,#VALUE!,write gloss
+high,pinyin_formula_error,901,7-9.091,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,901,7-9.091,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,902,7-9.091,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,902,7-9.091,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,903,7-9.092,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,903,7-9.092,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,904,7-9.092,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,904,7-9.092,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,905,7-9.093,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,905,7-9.093,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,906,7-9.093,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,906,7-9.093,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,907,7-9.094,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,907,7-9.094,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,908,7-9.094,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,908,7-9.094,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,909,7-9.094,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,909,7-9.094,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,910,7-9.094,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,910,7-9.094,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,911,7-9.095,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,911,7-9.095,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,912,7-9.095,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,912,7-9.095,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,913,7-9.096,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,913,7-9.096,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,914,7-9.096,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,914,7-9.096,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,915,7-9.097,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,915,7-9.097,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,916,7-9.097,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,916,7-9.097,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,917,7-9.098,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,917,7-9.098,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,918,7-9.098,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,918,7-9.098,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,919,7-9.098,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,919,7-9.098,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,920,7-9.099,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,920,7-9.099,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,921,7-9.099,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,921,7-9.099,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,922,7-9.100,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,922,7-9.100,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,923,7-9.100,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,923,7-9.100,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,924,7-9.101,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,924,7-9.101,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,925,7-9.101,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,925,7-9.101,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,926,7-9.102,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,926,7-9.102,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,927,7-9.102,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,927,7-9.102,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,928,7-9.103,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,928,7-9.103,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,929,7-9.103,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,929,7-9.103,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,930,7-9.104,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,930,7-9.104,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,931,7-9.104,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,931,7-9.104,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,932,7-9.105,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,932,7-9.105,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,933,7-9.105,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,933,7-9.105,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,934,7-9.106,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,934,7-9.106,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,935,7-9.106,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,935,7-9.106,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,936,7-9.107,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,936,7-9.107,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,937,7-9.107,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,937,7-9.107,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,938,7-9.108,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,938,7-9.108,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,939,7-9.108,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,939,7-9.108,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,940,7-9.109,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,940,7-9.109,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,941,7-9.109,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,941,7-9.109,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,942,7-9.109,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,942,7-9.109,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,943,7-9.110,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,943,7-9.110,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,944,7-9.110,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,944,7-9.110,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,945,7-9.111,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,945,7-9.111,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,946,7-9.111,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,946,7-9.111,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,947,7-9.112,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,947,7-9.112,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,948,7-9.112,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,948,7-9.112,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,949,7-9.113,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,949,7-9.113,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,950,7-9.113,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,950,7-9.113,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,951,7-9.114,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,951,7-9.114,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,952,7-9.114,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,952,7-9.114,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,953,7-9.115,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,953,7-9.115,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,954,7-9.115,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,954,7-9.115,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,955,7-9.116,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,955,7-9.116,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,956,7-9.116,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,956,7-9.116,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,957,7-9.117,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,957,7-9.117,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,958,7-9.117,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,958,7-9.117,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,959,7-9.118,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,959,7-9.118,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,960,7-9.118,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,960,7-9.118,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,961,7-9.119,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,961,7-9.119,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,962,7-9.119,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,962,7-9.119,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,963,7-9.119,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,963,7-9.119,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,964,7-9.120,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,964,7-9.120,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,965,7-9.120,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,965,7-9.120,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,966,7-9.121,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,966,7-9.121,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,967,7-9.121,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,967,7-9.121,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,968,7-9.121,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,968,7-9.121,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,969,7-9.122,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,969,7-9.122,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,970,7-9.122,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,970,7-9.122,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,971,7-9.123,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,971,7-9.123,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,972,7-9.123,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,972,7-9.123,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,973,7-9.124,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,973,7-9.124,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,974,7-9.124,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,974,7-9.124,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,975,7-9.125,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,975,7-9.125,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,976,7-9.125,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,976,7-9.125,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,977,7-9.126,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,977,7-9.126,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,978,7-9.126,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,978,7-9.126,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,979,7-9.127,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,979,7-9.127,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,980,7-9.127,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,980,7-9.127,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,981,7-9.128,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,981,7-9.128,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,982,7-9.128,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,982,7-9.128,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,983,7-9.128,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,983,7-9.128,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,984,7-9.129,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,984,7-9.129,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,985,7-9.129,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,985,7-9.129,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,986,7-9.130,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,986,7-9.130,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,987,7-9.130,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,987,7-9.130,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,988,7-9.131,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,988,7-9.131,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,989,7-9.131,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,989,7-9.131,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,990,7-9.132,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,990,7-9.132,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,991,7-9.132,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,991,7-9.132,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,992,7-9.132,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,992,7-9.132,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,993,7-9.132,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,993,7-9.132,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,994,7-9.133,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,994,7-9.133,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,995,7-9.133,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,995,7-9.133,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,996,7-9.134,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,996,7-9.134,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,997,7-9.134,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,997,7-9.134,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,998,7-9.135,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,998,7-9.135,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,999,7-9.135,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,999,7-9.135,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1000,7-9.136,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1000,7-9.136,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1001,7-9.136,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1001,7-9.136,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1002,7-9.137,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1002,7-9.137,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1003,7-9.137,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1003,7-9.137,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1004,7-9.138,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1004,7-9.138,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1005,7-9.138,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1005,7-9.138,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1006,7-9.139,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1006,7-9.139,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1007,7-9.139,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1007,7-9.139,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1008,7-9.140,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1008,7-9.140,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1009,7-9.140,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1009,7-9.140,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1010,7-9.140,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1010,7-9.140,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1011,7-9.141,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1011,7-9.141,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1012,7-9.141,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1012,7-9.141,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1013,7-9.142,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1013,7-9.142,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1014,7-9.142,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1014,7-9.142,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1015,7-9.143,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1015,7-9.143,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1016,7-9.143,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1016,7-9.143,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1017,7-9.144,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1017,7-9.144,url,,HSK 3.0 band has no course link
+high,pinyin_formula_error,1018,7-9.144,pinyin,#NAME?,generate pinyin offline (pypinyin)
+medium,no_lesson_url,1018,7-9.144,url,,HSK 3.0 band has no course link
+high,translation_wrong,17,1.07.1,translation,Monday September 2,"Thursday, September 2 (星期四)"
+medium,example_mismatch,554,5.35.3,example,事情已经根本解决了。,example lacks 肯定 and 根本 is misused; replace
+medium,typo,565,5.A03,example,可以可以,可以
+medium,typo,649,6.20.3,example,像册,相册
+medium,translation_adds_info,500,5.24.1,translation,injured his feet,he got injured (no body part in source)
+high,translation_wrong,619,6.11.3,translation,When the Chinese New Year is over,During New Year and holidays
+medium,typo,612,6.09.3,example,anythnig,anything
+medium,typo,523,5.29.2,example,That its,That is
+medium,typo,375,5.01.2,example,[you] relies,[you] rely
+high,translation_wrong,889,7-9.088,translation,She killed her husband last year...,"Last year she lost her husband (he died), then her parents passed away too."
+high,translation_wrong,890,7-9.088,translation,"I didn't earn money, but I ran away from my husband.","She didn't make any money, and on top of that her husband ran off."
+high,translation_wrong,899,7-9.090,translation,He is more than a robber!,He's even more of a robber than a robber!
+high,translation_wrong,1018,7-9.144,translation,"If he wants a degree, he needs courage.",He has neither a degree nor guts.
+high,translation_wrong,1017,7-9.144,translation,She wants achievements and image.,She has both the grades and the looks.
+high,translation_wrong,847,7-9.073,translation,I really didn't say that!,The new leaders are truly excellent.
+high,translation_wrong,708,7-9.006,translation,At the top of the table is my girlfriend.,The one sitting at the very front is my girlfriend.
+high,translation_wrong,709,7-9.006,translation,There is a vacancy as far north as possible.,At the far north end there is an empty seat.
+high,translation_wrong,751,7-9.027,translation,after three days and nights of sleep,after three straight days and nights of poor sleep
+medium,translation_drops_grammar,760,7-9.032,translation,What happened?,Could it be that something happened?
+medium,translation_drops_grammar,719,7-9.011,translation,he doesn't like to travel any more,he likes traveling less and less
+high,translation_wrong,734,7-9.019,translation,"He has always been a soft man, but you can't be hard.","He has always responded to persuasion, not force; you can't push him."
+high,translation_wrong,830,7-9.066,translation,The sound of a bird lasts for a short time.,"The birds' calls are sometimes long, sometimes short."
+high,translation_wrong,845,7-9.072,translation,"Indeed, I'm going to primary school.","Indeed, they're about to start primary school."
+high,translation_wrong,882,7-9.085,translation,He is mainly engaged in sports in our company.,At our company he mainly handles projects (跑项目).
+high,example_corrupt,912,7-9.095,example,也*别说*了,example missing; translation belongs to another sentence
+high,translation_wrong,988,7-9.131,translation,"It's not going, it's not going","Leaving won't do, staying won't do either."
+medium,translation_too_literal,1006,7-9.139,translation,because of her face,for her sake
+medium,translation_too_literal,1007,7-9.139,translation,in the face of the old man,out of respect for the old man
+high,translation_wrong,1013,7-9.142,translation,where are you?,what are you going on about?
+high,translation_wrong,1014,7-9.142,translation,Where do you want to go!,What are you thinking!
+medium,translation_drops_grammar,822,7-9.062,translation,She likes to pick things up.,She likes picking and choosing all over the place.
+medium,translation_drops_grammar,713,7-9.008,translation,He is interested in,He is quite interested in
+medium,translation_drops_grammar,706,7-9.005,translation,an outstanding painter,an extremely outstanding painter
+medium,english_gloss_machine_translated,826,7-9.064,english,忽A忽B: Huh_huh_,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,832,7-9.067,english,自A自B: since_since_,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,824,7-9.063,english,非A非B: Non-Non-Non,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,814,7-9.058,english,矣: Ah,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,772,7-9.038,english,乃: So,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,728,7-9.016,english,即: Right now,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,782,7-9.043,english,未免: Unavoidable,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,794,7-9.049,english,当着: When,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,834,7-9.068,english,巴不得: anxious,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,750,7-9.027,english,一连: One in a row,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,818,7-9.060,english,爱A不A: Love or not,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,830,7-9.066,english,时A时B: time_time_,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,740,7-9.022,english,亦: as well as,rewrite gloss for whole 7-9 band
+medium,english_gloss_machine_translated,1011,7-9.141,english,什么X的Y的: What_of_of,rewrite gloss for whole 7-9 band
+info,machine_translation_band,693-1018,7-9.*,translation,~324 rows,"7-9 translations are raw MT; re-translate the whole band, not just listed rows"
+info,pdf_overflow_text,"867,907,940,979,1018 …",7-9.*,structure/pattern,merged overflow text,re-export the original sheet as CSV; PDF loses long cells
+info,pdf_line_wrap_spaces,462 rows,*,example,spaces inside Chinese,strip whitespace between hanzi
+info,missing_ids,"851, 852",7-9.075/076,id,,confirm nothing deleted
+info,empty_pattern_column,levels 1-6,1.*–6.*,pattern,,only 7-9 filled
+info,formula_column,all,*,column I,#NAME?,header & every cell is a broken formula; drop column
