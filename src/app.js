@@ -103,6 +103,7 @@
     translationEl.classList.toggle('missing', !en);
     sourceEl.innerHTML = current.source
       ? `From Wikipedia: <a href="${esc(current.source.url)}" target="_blank" rel="noopener">${esc(current.source.title)}</a> · ${esc(current.source.license)}`
+        + (current.source.translation && settings.english ? `<br>English: ${esc(current.source.translation)}` : '')
       : '';
     stage.scrollTop = 0;
   }
@@ -247,7 +248,7 @@
     settings[key] = !settings[key];
     save();
     applySettings();
-    if (key === 'trad' && current) {
+    if ((key === 'trad' || key === 'english') && current) {
       renderContent();
       if (stack.length) renderFocus(null);
     }

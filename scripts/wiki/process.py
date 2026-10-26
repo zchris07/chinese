@@ -228,7 +228,7 @@ def main():
     cache_file = RAW / 'wiki/translations.jsonl'
     cache = {}
     if cache_file.exists():
-        cache = {r['key']: r['en'] for r in map(json.loads, cache_file.open(encoding='utf8'))}
+        cache = {r['key']: (r['en'], r.get('engine', 'claude')) for r in map(json.loads, cache_file.open(encoding='utf8'))}
 
     rng = random.Random(args.seed)
     passages, seen, rejected = [], set(), Counter()
@@ -296,7 +296,7 @@ def main():
             words[w] = entry
 
         for p in chunk:
-            sentences, levels, missing = [], [], []
+            sentences, levels, missing, engines = [], [], [], set()
             for s in p['sents']:
                 tokens = []
                 for t, tr in zip(s['toks'], s['trad']):
@@ -308,15 +308,19 @@ def main():
                         add_word(t['w'], t['syl'])
                         levels.append(hsk.get(t['w'], 7))
                     tokens.append(tok)
-                en = cache.get(hashlib.sha1(s['s'].encode('utf8')).hexdigest(), '')
-                if not en:
+                en, engine = cache.get(hashlib.sha1(s['s'].encode('utf8')).hexdigest(), ('', None))
+                if en:
+                    engines.add(engine)
+                else:
                     missing.append(s['s'])
                 sentences.append({'s': s['s'], 't': ''.join(s['trad']), 'en': en, 'tokens': tokens})
             beyond = sum(1 for l in levels if l >= 7) / len(levels)
             advanced = sum(1 for l in levels if l >= 5) / len(levels)
             level_counts['translated' if not missing else 'untranslated'] += 1
-            out.append({'id': p['id'], 'source': {'type': 'wikipedia', 'title': p['title'], 'url': p['url'],
-                                                  'license': LICENSE},
+            source = {'type': 'wikipedia', 'title': p['title'], 'url': p['url'], 'license': LICENSE}
+            if engines:
+                source['translation'] = 'Argos (offline machine translation)' if 'argos' in engines else 'Claude'
+            out.append({'id': p['id'], 'source': source,
                         'stats': {'tokens': len(levels), 'beyondHsk': round(beyond, 3), 'hsk5plus': round(advanced, 3)},
                         'sentences': sentences})
             if missing:

@@ -23,6 +23,8 @@ from anthropic.types.messages.batch_create_params import Request
 ROOT = Path(__file__).resolve().parents[2]
 PENDING = ROOT / 'data/raw/wiki/pending.jsonl'
 CACHE = ROOT / 'data/raw/wiki/translations.jsonl'
+# Batch prices in USD per million tokens (50% of standard). Update if pricing changes.
+BATCH_PRICE = {'claude-opus-5-5': (2.00, 10.00), 'claude-sonnet-5-5': (1.00, 5.00), 'claude-haiku-5-5': (0.05, 0.25)}
 
 SYSTEM = (
     'You translate Simplified Chinese encyclopedia sentences into natural, accurate English '
@@ -68,6 +70,7 @@ def main():
     args = ap.parse_args()
 
     passages = [json.loads(l) for l in PENDING.open(encoding='utf8')] if PENDING.exists() else []
+    total_pending = len(passages)
     if args.limit:
         passages = passages[:args.limit]
     if not passages:
@@ -85,7 +88,7 @@ def main():
         c = batch.request_counts
         print(f'  {batch.processing_status}: {c.processing} processing, {c.succeeded} done, {c.errored} errored')
 
-    ok = failed = 0
+    ok = failed = tokens_in = tokens_out = 0
     with CACHE.open('a', encoding='utf8') as f:
         for res in client.messages.batches.results(batch.id):
             p = by_id[res.custom_id]
@@ -94,6 +97,8 @@ def main():
                 print(f'  {res.custom_id}: {res.result.type}')
                 continue
             msg = res.result.message
+            tokens_in += msg.usage.input_tokens
+            tokens_out += msg.usage.output_tokens
             if msg.stop_reason == 'refusal':
                 failed += 1
                 print(f'  {res.custom_id}: refused')
@@ -108,6 +113,13 @@ def main():
                 f.write(json.dumps({'key': key(zh), 'zh': zh, 'en': en.strip()}, ensure_ascii=False) + '\n')
             ok += 1
     print(f'translated {ok} passages, {failed} failed. Now re-run: python scripts/wiki/process.py')
+    price_in, price_out = BATCH_PRICE.get(args.model, (None, None))
+    print(f'tokens: {tokens_in:,} in, {tokens_out:,} out (output includes thinking)')
+    if price_in is not None and passages:
+        cost = tokens_in / 1e6 * price_in + tokens_out / 1e6 * price_out
+        per = cost / len(passages)
+        print(f'cost: ${cost:.4f} (${per:.5f} per passage, batch pricing for {args.model})')
+        print(f'projected: ${per * total_pending:.2f} for all {total_pending:,} pending, ${per * 1_000_000:,.0f} per million passages')
 
 
 if __name__ == '__main__':

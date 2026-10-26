@@ -137,7 +137,11 @@ sentences. Sources are limited to text we can legally ship. The pilot is
   4. `translate.py`: English per sentence via the Message Batches API (one request
      per passage, structured JSON output), cached in `data/raw/wiki/translations.jsonl`
      (committed, keyed by sha1 of the sentence). Re-run `process.py` to merge.
-     Needs Anthropic credentials. **Not run yet**, so the pilot passages have no English.
+     Needs Anthropic credentials; prints tokens, cost and a full-pool projection. Not run yet.
+  4b. `translate_local.py`: **free** offline alternative with Argos Translate (`pip install
+     argostranslate`, about 1 s per sentence on CPU), written to the same cache with
+     `engine: 'argos'`. This is what the pilot uses. Names are often wrong and clauses are
+     sometimes dropped, so the app labels it as machine translation.
 - **Output:** `data/build/wiki/index.json` + `shard-NNN.json` (50 passages each, with
   their own `words`/`chars` tables, merged into the app's lookup on load). Passage:
   `{ id, source: { type, title, url, license }, stats: { tokens, beyondHsk, hsk5plus },
