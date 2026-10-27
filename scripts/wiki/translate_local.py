@@ -1,8 +1,8 @@
 """Free offline translation of pending sentences with Argos Translate (no API key).
 
-Reads data/raw/wiki/pending.jsonl (written by process.py) and appends each new
+Reads data/raw/wiki/pending.jsonl (written by scripts/pool/build_pool.py) and appends each new
 translation to data/raw/wiki/translations.jsonl as it goes, so it can be stopped
-and resumed. Re-run process.py afterwards to merge.
+and resumed. Re-run build_pool.py afterwards to merge.
 
     pip install argostranslate
     python scripts/wiki/translate_local.py            # all pending
@@ -59,7 +59,7 @@ def main():
             if i % 100 == 0:
                 rate = (time.time() - start) / i
                 print(f'  {i}/{len(todo)}  ~{rate * (len(todo) - i) / 60:.0f} min left')
-    print('done. Now re-run: python scripts/wiki/process.py --per-article 3 --shard-size 50')
+    print('done. Now re-run: python scripts/pool/build_pool.py')
 
 
 if __name__ == '__main__':

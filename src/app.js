@@ -1,9 +1,8 @@
 (() => {
-  const DATA = window.APP_DATA;
-  const words = { ...DATA.words };
-  const chars = { ...DATA.chars };
-  const BUCKETS = { simple: [1, 2], conversational: [3, 4], difficult: [5, 6] };
-  const WIKI_BASE = window.WIKI_BASE || '../data/build/wiki/';
+  const words = {};
+  const chars = {};
+  const TIERS = ['simple', 'ordinary', 'complex', 'scholar'];
+  const POOL_BASE = window.POOL_BASE || '../data/build/pool/';
 
   const $ = (id) => document.getElementById(id);
   const stage = $('stage');
@@ -14,18 +13,20 @@
   const focus = $('focus');
 
   const settings = load();
-  let current = null; // { sentences: [{ tokens, en }], source? }
+  let current = null; // { raw, sentences: [{ tokens, en }], source }
   let stack = []; // zoom levels: {type:'word', w, syl?, ref?} | {type:'char', w, ci, syl?}
   let renderId = 0;
 
   // ---------- settings ----------
   function load() {
     const defaults = { difficulty: 'simple', pinyin: true, trad: false, english: false };
-    try { return { ...defaults, ...JSON.parse(localStorage.getItem('jade-settings-v2') || '{}') }; }
-    catch { return defaults; }
+    try {
+      const saved = { ...defaults, ...JSON.parse(localStorage.getItem('jade-settings-v3') || '{}') };
+      return TIERS.includes(saved.difficulty) ? saved : { ...saved, difficulty: defaults.difficulty };
+    } catch { return defaults; }
   }
   function save() {
-    try { localStorage.setItem('jade-settings-v2', JSON.stringify(settings)); } catch {}
+    try { localStorage.setItem('jade-settings-v3', JSON.stringify(settings)); } catch {}
   }
   function applySettings() {
     document.body.classList.toggle('pinyin', settings.pinyin);
@@ -37,50 +38,49 @@
     $('t-script').textContent = settings.trad ? '繁' : '简';
     $('t-english').setAttribute('aria-pressed', settings.english);
     $('difficulty').value = settings.difficulty;
-    nextBtn.textContent = settings.difficulty === 'wiki' ? 'New passage ↻' : 'New sentence ↻';
   }
 
   const show = (simp, trad) => (settings.trad ? trad ?? simp : simp);
   const wordText = (w) => show(w, words[w]?.t);
   const charText = (w, ci) => [...wordText(w)][ci];
   const sylOf = (e) => e.syl || words[e.w].py;
-  const hskLabel = (w) => (words[w]?.hsk ? `HSK ${words[w].hsk}` : 'Beyond HSK');
+  const hskLabel = (w) => {
+    const level = words[w]?.hsk;
+    return level ? `HSK ${level === 7 ? '7–9' : level}` : 'Not in HSK 3.0';
+  };
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   // ---------- content ----------
-  function pickSentence() {
-    const [lo, hi] = BUCKETS[settings.difficulty];
-    const pool = DATA.sentences.filter((s) => s.level >= lo && s.level <= hi && s !== current?.raw);
-    const s = pool[Math.floor(Math.random() * pool.length)];
-    return { raw: s, sentences: [s] };
-  }
-
-  const wiki = { index: null, shards: {} };
+  const pool = { index: null, shards: {} };
   async function loadShard(file) {
-    if (!wiki.shards[file]) {
-      const shard = await fetch(WIKI_BASE + file).then((r) => r.json());
+    if (!pool.shards[file]) {
+      const shard = await fetch(POOL_BASE + file).then((r) => r.json());
       for (const [k, v] of Object.entries(shard.words)) words[k] ??= v;
       for (const [k, v] of Object.entries(shard.chars)) {
         chars[k] = chars[k]
           ? { m: chars[k].m || v.m, words: [...new Set([...chars[k].words, ...v.words])] }
           : v;
       }
-      wiki.shards[file] = shard.passages;
+      pool.shards[file] = shard.sentences;
     }
-    return wiki.shards[file];
+    return pool.shards[file];
   }
-  async function pickPassage() {
-    wiki.index ??= await fetch(WIKI_BASE + 'index.json').then((r) => r.json());
-    const shard = wiki.index.shards[Math.floor(Math.random() * wiki.index.shards.length)];
-    const pool = (await loadShard(shard.file)).filter((p) => p !== current?.raw);
-    const p = pool[Math.floor(Math.random() * pool.length)];
-    return { raw: p, sentences: p.sentences, source: p.source };
+  // Uniform over the whole tier: pick a position, find the shard that holds it.
+  async function pickSentence() {
+    pool.index ??= await fetch(POOL_BASE + 'index.json').then((r) => r.json());
+    const tier = pool.index.tiers[settings.difficulty];
+    if (!tier?.count) throw new Error('empty tier');
+    let s;
+    for (let tries = 0; tries < 5; tries++) {
+      const n = Math.floor(Math.random() * tier.count);
+      s = (await loadShard(tier.files[Math.floor(n / pool.index.shardSize)]))[n % pool.index.shardSize];
+      if (s !== current?.raw || tier.count === 1) break;
+    }
+    return { raw: s, sentences: [s], source: s.source };
   }
 
-  // ---------- sentence / passage level ----------
+  // ---------- sentence level ----------
   function renderContent() {
-    const passage = current.sentences.length > 1 || !!current.source;
-    sentenceEl.classList.toggle('passage', passage);
     sentenceEl.innerHTML = '';
     current.sentences.forEach((s, si) => {
       s.tokens.forEach((tok, ti) => {
@@ -99,13 +99,19 @@
       });
     });
     const en = current.sentences.map((s) => s.en).filter(Boolean).join(' ');
-    translationEl.textContent = en || 'No English translation yet for this passage.';
+    translationEl.textContent = en || 'No English translation yet for this sentence.';
     translationEl.classList.toggle('missing', !en);
-    sourceEl.innerHTML = current.source
-      ? `From Wikipedia: <a href="${esc(current.source.url)}" target="_blank" rel="noopener">${esc(current.source.title)}</a> · ${esc(current.source.license)}`
-        + (current.source.translation && settings.english ? `<br>English: ${esc(current.source.translation)}` : '')
-      : '';
+    sourceEl.innerHTML = sourceHtml(current.source);
     stage.scrollTop = 0;
+  }
+
+  function sourceHtml(src) {
+    if (!src) return '';
+    const link = (text) => (src.url ? `<a href="${esc(src.url)}" target="_blank" rel="noopener">${esc(text)}</a>` : esc(text));
+    const from = src.type === 'wikipedia' ? `From Wikipedia: ${link(src.title)} · ${esc(src.license)}`
+      : src.type === 'tatoeba' ? `From Tatoeba: ${link(src.title)} · ${esc(src.license)}`
+      : `Grammar example: ${esc(src.title)} · lesson ${link(src.code)}`;
+    return from + (src.translation && settings.english ? `<br>English: ${esc(src.translation)}` : '');
   }
 
   async function nextSentence() {
@@ -114,10 +120,9 @@
     stage.classList.add('swap');
     let next;
     try {
-      next = settings.difficulty === 'wiki' ? await pickPassage() : pickSentence();
+      next = await pickSentence();
     } catch {
-      sentenceEl.classList.remove('passage');
-      sentenceEl.innerHTML = '<span class="error">Couldn’t load passages. Open the app from a web server (see CLAUDE.md), not as a file.</span>';
+      sentenceEl.innerHTML = '<span class="error">Couldn’t load sentences. Build the pool and open the app from a web server (see CLAUDE.md), not as a file.</span>';
       stage.classList.remove('swap');
       return;
     }
@@ -146,7 +151,7 @@
       ${crumbs()}
       <div class="py">${sylOf(e).join('')}</div>
       <div class="big" lang="zh">${chs}</div>
-      <div class="meta">${hskLabel(e.w)} · ${single ? 'single character' : 'word'}</div>
+      <div class="meta">${hskLabel(e.w)} · ${w.pos || (single ? 'single character' : 'word')}</div>
       <ul class="defs">${defs.map((d) => `<li>${esc(d)}</li>`).join('')}</ul>
     </div>`;
   }

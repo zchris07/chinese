@@ -1,21 +1,13 @@
-"""Turn fetched Wikipedia articles into analyzable passages for the app.
+"""Text helpers shared by the sentence-pool pipeline (scripts/pool/build_pool.py, scripts/merge/build_merged.py).
 
-Reads   data/raw/wiki/articles.jsonl, data/raw/cedict/cedict.txt.gz,
-        data/raw/hsk/complete.json, data/raw/wiki/translations.jsonl (cache)
-Writes  data/build/wiki/index.json + shard-NNN.json (passages with their own
-        word/char tables), and data/raw/wiki/pending.jsonl (sentences still
-        needing translation, for translate.py).
-
-    python scripts/wiki/process.py --per-article 4 --shard-size 100
+CC-CEDICT loading and pinyin tone marks, Wikipedia text cleaning and sentence splitting,
+jieba + dictionary tokenisation, traditional conversion, and reading-aware definitions.
+Not run directly.
 """
-import argparse
 import gzip
-import hashlib
-import json
-import random
 import re
 import unicodedata
-from collections import Counter, defaultdict
+from collections import defaultdict
 from pathlib import Path
 
 import jieba
@@ -90,16 +82,6 @@ def load_cedict():
                 'defs': clean_defs(defs.split('/')),
             })
     return entries
-
-
-def load_hsk():
-    levels, freq = {}, {}
-    for e in json.load(open(RAW / 'hsk/complete.json', encoding='utf8')):
-        old = [int(l[4:]) for l in e['level'] if l.startswith('old-')]
-        new = [int(l[4:]) for l in e['level'] if l.startswith('new-')]
-        levels[e['simplified']] = min(old) if old else (7 if min(new) >= 7 else min(new))
-        freq[e['simplified']] = e.get('frequency') or 10 ** 6
-    return levels, freq
 
 
 # ---------- paragraph selection ----------
@@ -212,148 +194,3 @@ def pick_defs(entries, syl):
     for e in ranked:
         defs += [d for d in e['defs'] if d not in defs]
     return defs[:5]
-
-
-# ---------- main ----------
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--per-article', type=int, default=4)
-    ap.add_argument('--shard-size', type=int, default=100)
-    ap.add_argument('--max-unknown', type=float, default=0.02, help='max share of chars missing from CC-CEDICT')
-    ap.add_argument('--seed', type=int, default=11)
-    args = ap.parse_args()
-
-    cedict = load_cedict()
-    hsk, freq = load_hsk()
-    cache_file = RAW / 'wiki/translations.jsonl'
-    cache = {}
-    if cache_file.exists():
-        cache = {r['key']: (r['en'], r.get('engine', 'claude')) for r in map(json.loads, cache_file.open(encoding='utf8'))}
-
-    rng = random.Random(args.seed)
-    passages, seen, rejected = [], set(), Counter()
-    for line in (RAW / 'wiki/articles.jsonl').open(encoding='utf8'):
-        art = json.loads(line)
-        paras = paragraphs(art['text'])
-        rng.shuffle(paras)
-        taken = 0
-        for pi, p in enumerate(paras):
-            if taken >= args.per_article:
-                break
-            h = hashlib.sha1(p.encode('utf8')).hexdigest()
-            if h in seen:
-                rejected['duplicate'] += 1
-                continue
-            seen.add(h)
-            sents = []
-            for s in split_sentences(p):
-                toks = tokenize(s, cedict)
-                trad = traditional(toks)
-                sents.append({'s': s, 'toks': toks, 'trad': trad})
-            hz = [c for s in sents for c in s['s'] if CJK.match(c)]
-            unknown = sum(1 for c in hz if c not in cedict)
-            if unknown / len(hz) > args.max_unknown:
-                rejected['unknown characters'] += 1
-                continue
-            passages.append({'id': f"wiki-{art['pageid']}-{pi}", 'title': T2S.convert(art['title']),
-                             'url': art['url'], 'sents': sents})
-            taken += 1
-
-    rng.shuffle(passages)
-
-    # Global word frequency in the corpus, for ranking "words with this character".
-    corpus_freq = Counter(t['w'] for p in passages for s in p['sents'] for t in s['toks']
-                          if t['kind'] in ('word', 'char'))
-    candidates = defaultdict(set)  # char -> words containing it
-    for w in set(corpus_freq) | set(hsk):
-        if w in cedict and len(w) > 1:
-            for c in set(w):
-                candidates[c].add(w)
-
-    def rank(w):
-        return (hsk.get(w, 8), -corpus_freq.get(w, 0), freq.get(w, 10 ** 6))
-
-    OUT.mkdir(parents=True, exist_ok=True)
-    for old in OUT.glob('shard-*.json'):
-        old.unlink()
-    pending, shards = [], []
-    level_counts = Counter()
-    for si in range(0, len(passages), args.shard_size):
-        chunk = passages[si:si + args.shard_size]
-        words, chars, out = {}, {}, []
-
-        def add_word(w, syl=None, ndefs=5):
-            if w in words:
-                return
-            es = cedict.get(w, [])
-            py = syl or (es[0]['py'] if es else lazy_pinyin(w, style=Style.TONE))
-            entry = {'py': py, 'defs': pick_defs(es, py)[:ndefs] if es else []}
-            trad = es[0]['t'] if es else S2T.convert(w)
-            if trad != w:
-                entry['t'] = trad
-            if w in hsk:
-                entry['hsk'] = hsk[w]
-            words[w] = entry
-
-        for p in chunk:
-            sentences, levels, missing, engines = [], [], [], set()
-            for s in p['sents']:
-                tokens = []
-                for t, tr in zip(s['toks'], s['trad']):
-                    tok = {'w': t['w'], 'kind': t['kind']}
-                    if tr != t['w']:
-                        tok['t'] = tr
-                    if t['kind'] in ('word', 'char'):
-                        tok['py'] = ' '.join(t['syl'])
-                        add_word(t['w'], t['syl'])
-                        levels.append(hsk.get(t['w'], 7))
-                    tokens.append(tok)
-                en, engine = cache.get(hashlib.sha1(s['s'].encode('utf8')).hexdigest(), ('', None))
-                if en:
-                    engines.add(engine)
-                else:
-                    missing.append(s['s'])
-                sentences.append({'s': s['s'], 't': ''.join(s['trad']), 'en': en, 'tokens': tokens})
-            beyond = sum(1 for l in levels if l >= 7) / len(levels)
-            advanced = sum(1 for l in levels if l >= 5) / len(levels)
-            level_counts['translated' if not missing else 'untranslated'] += 1
-            source = {'type': 'wikipedia', 'title': p['title'], 'url': p['url'], 'license': LICENSE}
-            if engines:
-                source['translation'] = 'Argos (offline machine translation)' if 'argos' in engines else 'Claude'
-            out.append({'id': p['id'], 'source': source,
-                        'stats': {'tokens': len(levels), 'beyondHsk': round(beyond, 3), 'hsk5plus': round(advanced, 3)},
-                        'sentences': sentences})
-            if missing:
-                pending.append({'id': p['id'], 'sentences': [s['s'] for s in p['sents']]})
-
-        for w in list(words):
-            for c in w:
-                if c in chars or not CJK.match(c):
-                    continue
-                m = []
-                for e in cedict.get(c, []):
-                    m += [d for d in e['defs'] if d not in m]
-                rel = sorted(candidates.get(c, ()), key=rank)[:6]
-                chars[c] = {'m': '; '.join(m[:4]), 'words': rel}
-                for r in rel:
-                    add_word(r, ndefs=2)
-
-        name = f'shard-{len(shards):03d}.json'
-        (OUT / name).write_text(json.dumps({'passages': out, 'words': words, 'chars': chars},
-                                           ensure_ascii=False, separators=(',', ':')), encoding='utf8')
-        shards.append({'file': name, 'count': len(out)})
-
-    (OUT / 'index.json').write_text(json.dumps({'source': 'zh.wikipedia.org featured articles (典范条目)',
-                                                'license': LICENSE, 'count': len(passages), 'shards': shards},
-                                               ensure_ascii=False, indent=1), encoding='utf8')
-    with (RAW / 'wiki/pending.jsonl').open('w', encoding='utf8') as f:
-        for p in pending:
-            f.write(json.dumps(p, ensure_ascii=False) + '\n')
-
-    size = sum((OUT / s['file']).stat().st_size for s in shards) / 1e6
-    print(f'{len(passages)} passages in {len(shards)} shards ({size:.1f} MB); rejected: {dict(rejected)}')
-    print(f'translation: {dict(level_counts)}; pending written for {len(pending)} passages')
-
-
-if __name__ == '__main__':
-    main()

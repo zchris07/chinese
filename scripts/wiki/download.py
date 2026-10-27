@@ -1,4 +1,4 @@
-"""Download the dictionaries the passage pipeline needs (not committed: large raw data).
+"""Download the dictionaries and corpora the pool pipeline needs (not committed: large raw data).
 
     python scripts/wiki/download.py
 """
@@ -10,6 +10,10 @@ RAW = Path(__file__).resolve().parents[2] / 'data/raw'
 FILES = {
     'cedict/cedict.txt.gz': 'https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz',  # CC BY-SA 4.0
     'hsk/complete.json': 'https://raw.githubusercontent.com/drkameleon/complete-hsk-vocabulary/main/complete.json',  # MIT
+    # Tatoeba (CC BY 2.0 FR): Mandarin sentences, English sentences, and the translation links between them
+    'tatoeba/cmn_sentences.tsv.bz2': 'https://downloads.tatoeba.org/exports/per_language/cmn/cmn_sentences.tsv.bz2',
+    'tatoeba/eng_sentences.tsv.bz2': 'https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2',
+    'tatoeba/cmn-eng_links.tsv.bz2': 'https://downloads.tatoeba.org/exports/per_language/cmn/cmn-eng_links.tsv.bz2',
 }
 
 for rel, url in FILES.items():

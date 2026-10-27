@@ -1,9 +1,9 @@
 """Translate pending passage sentences to English with the Claude Message Batches API.
 
-process.py writes data/raw/wiki/pending.jsonl (passages whose sentences have no
+scripts/pool/build_pool.py writes data/raw/wiki/pending.jsonl (passages whose sentences have no
 cached translation). This script submits one batch request per passage, waits,
 and appends results to data/raw/wiki/translations.jsonl ({key, zh, en}).
-Re-run process.py afterwards to merge translations into the build.
+Re-run build_pool.py afterwards to merge translations into the build.
 
 Needs Anthropic credentials (ANTHROPIC_API_KEY or an `ant auth login` profile).
 
@@ -112,7 +112,7 @@ def main():
             for zh, en in zip(p['sentences'], out):
                 f.write(json.dumps({'key': key(zh), 'zh': zh, 'en': en.strip()}, ensure_ascii=False) + '\n')
             ok += 1
-    print(f'translated {ok} passages, {failed} failed. Now re-run: python scripts/wiki/process.py')
+    print(f'translated {ok} passages, {failed} failed. Now re-run: python scripts/pool/build_pool.py')
     price_in, price_out = BATCH_PRICE.get(args.model, (None, None))
     print(f'tokens: {tokens_in:,} in, {tokens_out:,} out (output includes thinking)')
     if price_in is not None and passages:

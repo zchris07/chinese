@@ -18,7 +18,7 @@ Other languages may come later, so keep the data model language-agnostic
 **In scope**
 - Jade-green backdrop, white centered sentence, nothing else cluttering the screen.
 - New random sentence on **Space** or a button click.
-- Difficulty selector mapped to HSK level (simple → conversational → difficult).
+- Difficulty selector with four tiers: **Simple, Ordinary, Complex, Scholar** (see Sentence pool).
 - Toggles: pinyin, simplified/traditional, English translation.
 - Hover a word/character → its text changes shade. Multi-character words highlight
   as one unit; standalone single-character morphemes highlight alone.
@@ -28,7 +28,7 @@ Other languages may come later, so keep the data model language-agnostic
   animation, showing the character's general meaning/connotation and a list of
   other words containing it.
 - Click-away / Escape steps back out one level.
-- A small, hand-curated or pipeline-built sentence set is enough (a few hundred is fine).
+- A pipeline-built sentence pool of a few thousand sentences is enough.
 
 **Out of scope (post-prototype)**
 - Accounts, login, server-side persistence, spaced repetition, quizzes, Anki export.
@@ -48,128 +48,122 @@ Other languages may come later, so keep the data model language-agnostic
   - pinyin per token
   - segmentation into tokens (word-level), each token marked as a multi-character
     word or a single character
-  - difficulty level (highest HSK level among its words) and optional grammar-pattern tag
+  - tier (simple / ordinary / complex / scholar) and a source record (type, title, link, license)
 - Word and character data live in separate lookup tables keyed by the token/character:
-  - words: definitions (cleaned), pinyin with tone marks, HSK level
+  - words: definitions (cleaned), pinyin with tone marks, HSK 3.0 level, part of speech
   - characters: general meaning, plus a reverse index of words that contain it
 - Model the zoom as **levels**: sentence → word → component. Do not hardcode
   "Chinese character" assumptions into UI logic beyond the data fields.
 
 ## Data sources
 
-| Need | Source |
-|---|---|
-| HSK vocab + definitions | The provided HSK Vocab sheet (CC-CEDICT-style definitions) |
-| Grammar patterns + example sentences | The provided Language Player grammar chart |
-| Extra sentences | Tatoeba (CC-BY), filtered by difficulty score |
-| Dictionary backfill | CC-CEDICT (CC BY-SA) |
-| Character meanings | Wiktionary extracts, or LLM-written and cached |
-| Segmentation (offline) | jieba, pkuseg, or HanLP |
-| Pinyin / script conversion (offline) | pinyin-pro, OpenCC |
+| Need | Source | License |
+|---|---|---|
+| Levels, part of speech, traditional forms, grammar outline | **ivankra/hsk30** — official HSK 3.0, `data/raw/hsk30/` (primary reference) | MIT |
+| HSK 2.0 level per word, grammar examples + translations, lesson links | The two Google Sheets, `data/raw/hsk_vocab.xlsx`, `hsk_grammar.xlsx` | third-party; rights unconfirmed |
+| Definitions, classifiers, character meanings | CC-CEDICT | CC BY-SA 4.0 |
+| Word frequency | drkameleon/complete-hsk-vocabulary | MIT |
+| Everyday sentences + human English | Tatoeba | CC BY 2.0 FR |
+| Real-world sentences | zh.wikipedia.org featured articles (典范条目) | CC BY-SA 4.0 |
+| Segmentation / pinyin / script (offline) | jieba, pypinyin, OpenCC | |
 
-Raw source files go in `data/raw/`. Generated output goes in `data/build/`.
-Never hand-edit generated files; fix the pipeline or the raw data instead.
+Raw source files go in `data/raw/`. Generated output goes in `data/merged/` (committed) and
+`data/build/` (git-ignored). Never hand-edit generated files; fix the pipeline, the raw data, or
+`data/raw/corrections.csv` instead.
 
 ### Data rules
 - Translation is **precomputed once and cached** in the sentence record. The
   translation toggle only shows/hides stored text.
-- Any LLM or translation API call happens only in offline scripts under `scripts/`.
+- Any LLM or translation call happens only in offline scripts under `scripts/`.
   API keys come from environment variables and are never committed or shipped to the browser.
-- Sentence difficulty = highest HSK level of any word in it. A generated or imported
-  sentence whose words are not all found in the vocab data must be rejected or flagged.
-- Known data issues to clean before use: numbered pinyin (`xiu1 ci3`) must be
-  converted to tone marks; vocab definitions lump senses with semicolons and include
-  `CL:` classifier notes; the grammar sheet has corrupted cells (`#NAME?`,
-  auto-converted dates) and an empty `pattern` column.
-- Open question to resolve first: whether the vocab sheet follows HSK 2.0 (levels 1–6)
-  or HSK 3.0 (levels 1–9). Do not assume; check and record the answer here.
+- **HSK version: resolved.** The vocab sheet is **HSK 2.0** (levels 1–6, 5,003 words). The grammar
+  sheet's levels 1–6 follow the HSK 2.0 Standard Course textbooks and its `7-9` block follows HSK 3.0.
+  The project uses **HSK 3.0 (hsk30) as the reference level**; HSK 2.0 is kept as a second column.
+  Findings and itemized errors are in `docs/audit/`.
+- Sheet cells that were corrupted by the spreadsheet (auto-converted dates/times, typos, mistranslations)
+  are fixed through `data/raw/corrections.csv`; each fix is noted in the merged CSV's `notes` column.
+- The 7–9 band of the grammar sheet has machine-translated glosses; its rows are flagged
+  `sheet-machine` in `translation_source` and the app labels them "Machine translation (unreviewed)".
 
-## Current state (first prototype build)
+## Merged CSV
 
-- **Stack chosen:** plain HTML/CSS/JS, no framework, no bundler. Stay with it.
-- **Run it:** `node scripts/build.mjs` (rebuilds data), then serve the repo root
-  (`python -m http.server 5173`) and open `http://localhost:5173/src/`.
-  Opening `src/index.html` directly from disk also works, because the build emits
-  `data/build/data.js` (`window.APP_DATA = …`) alongside `data.json`.
-- **Phone / shareable build:** `node scripts/bundle.mjs` inlines everything into
-  `dist/jade.html` (gitignored), which is published as a private claude.ai artifact:
-  https://claude.ai/artifact/NBDUjVAAHj41nSNnLkBdVd. Re-bundle and republish after UI changes.
-- **Look:** bold sans (Noto Sans SC/TC 700, subway-sign style), pinyin on by default, flat, fully opaque jade (`--jade: #2b9b70`) with no gradient or shading;
-  hovered words turn deep jade (`--hover`).
-- **Data is hand-curated for now:** `data/raw/sentences.txt` (34 pre-segmented
-  sentences + English), `words.tsv`, `chars.tsv`. The HSK Vocab sheet and grammar
-  chart have **not** been added yet. When they arrive, replace the curated TSVs
-  with a cleaning step in `scripts/` that produces the same shape.
-- **HSK version:** the curated levels approximate **HSK 2.0 (1–6)** and were
-  hand-assigned. The open question about the real vocab sheet is still unresolved.
-- **Difficulty buckets:** simple = HSK 1–2, conversational = 3–4, difficult = 5–6.
-- **Build output shape** (`data/build/data.json`):
-  - `sentences[]`: `{ id, s, t, en, level, tokens: [{ w, t, py, kind: 'word'|'char'|'punct' }] }`
-  - `words{simplified}`: `{ t, py: [syllable…], hsk, defs: [...] }` — one syllable per character
-  - `chars{simplified}`: `{ m, words: [simplified…] }` — reverse index, sorted by HSK
-- The build fails on any token missing from `words.tsv` or any character missing from `chars.tsv`.
-- **UI:** the zoom is a stack (`word` → `char` → related `word` → …). Esc or
-  click-away pops one level; Space or the big button under the sentence gives a new one.
-  A single click/tap on a word opens it (no tap-to-arm step). Glyphs fly between
-  levels with a FLIP transform. Keys: P pinyin, S script, E English.
-- **Not yet handled (curated set):** contextual pinyin (tone sandhi such as 一/不, and polyphonic
-  characters come from the word entry, not the sentence context).
+`python scripts/merge/build_merged.py` → `data/merged/hsk_merged.csv` (+ `merge_report.md`).
+One row per word form (`type=word`, 11.6k), per HSK 3.0 grammar point (`type=grammar`, 573) and per
+grammar-sheet example (`type=example`, 1,016). Columns include `hsk3_level`, `hsk2_level`, `pos`,
+`definition` (senses joined by ` | `), `classifiers`, `frequency_rank`, `textbook_code`, `example_zh/en`,
+`translation_source`, `lesson_url`, `source`, `license`, `notes`.
+Sheet words that hsk30 lacks are kept with an empty `hsk3_level`. Examples link to an hsk30 grammar point
+by a conservative heuristic (`grammar_no`, flagged in `notes`); usage-only rows stay unlinked.
 
-## Real-world passages (Wikipedia pilot)
+## Sentence pool (what the app draws from)
 
-Goal: a **huge** pool of real paragraphs, fully analyzable like the curated
-sentences. Sources are limited to text we can legally ship. The pilot is
-**Wikipedia only**. Poetry, literature, news, lyrics and social media are out for now.
+`python scripts/pool/build_pool.py` → `data/build/pool/index.json` + `<tier>-NNN.json` shards
+(150 sentences each, with their own `words`/`chars` tables, merged into the app's lookup on load).
+Each sentence is analysed the same way whatever its source: jieba segmentation (HSK words added to the
+dictionary), contextual pinyin, traditional via OpenCC, word data from the merged CSV (CC-CEDICT fallback).
 
-- **Difficulty option:** "Real-world · Wikipedia" (`difficulty: 'wiki'`) shows a
-  random multi-sentence passage with a source/license line. Word and character
-  drill-down work the same as for sentences.
-- **Pipeline** (Python, in `scripts/wiki/`; `pip install jieba pypinyin opencc-python-reimplemented requests anthropic`):
-  1. `download.py`: CC-CEDICT + the MIT `complete-hsk-vocabulary` list into `data/raw/`.
-  2. `fetch.py --count 350`: random featured articles (典范条目) via the MediaWiki API
-     → `data/raw/wiki/articles.jsonl`. Random articles are mostly stubs, so we sample featured ones.
-  3. `process.py`: clean (to simplified, strip romanized parentheticals and refs),
-     pick paragraphs of 2–6 sentences / 50–360 chars, split words with jieba (unknown
-     compounds split greedily into CC-CEDICT words), add citation-tone pinyin (pypinyin,
-     no sandhi), traditional via OpenCC, definitions from CC-CEDICT (matching reading
-     first), levels from HSK 2.0 (`old-N`; 7 = HSK 3.0 7–9 only; missing = beyond HSK).
-     Rejects passages where >2% of characters are missing from CC-CEDICT.
-  4. `translate.py`: English per sentence via the Message Batches API (one request
-     per passage, structured JSON output), cached in `data/raw/wiki/translations.jsonl`
-     (committed, keyed by sha1 of the sentence). Re-run `process.py` to merge.
-     Needs Anthropic credentials; prints tokens, cost and a full-pool projection. Not run yet.
-  4b. `translate_local.py`: **free** offline alternative with Argos Translate (`pip install
-     argostranslate`, about 1 s per sentence on CPU), written to the same cache with
-     `engine: 'argos'`. This is what the pilot uses. Names are often wrong and clauses are
-     sometimes dropped, so the app labels it as machine translation.
-- **Output:** `data/build/wiki/index.json` + `shard-NNN.json` (50 passages each, with
-  their own `words`/`chars` tables, merged into the app's lookup on load). Passage:
-  `{ id, source: { type, title, url, license }, stats: { tokens, beyondHsk, hsk5plus },
-  sentences: [{ s, t, en, tokens: [{ w, t?, py ('mì shū chù'), kind }] }] }`.
-  `t` is omitted when equal to the simplified text; `kind` adds `other` (Latin/digits).
-- **Not committed:** raw dictionaries, fetched articles and `data/build/wiki/`
-  (regenerate with the steps above). The translation cache is committed because it costs money to rebuild.
-- **Hosting:** the app `fetch()`es shards, so it must be served over http. The phone
-  artifact publishes `data/build/wiki/*` as `wiki/*` next to the page (`window.WIKI_BASE`).
-  At full scale move to GitHub Pages or Cloudflare Pages, since the artifact has a size cap.
-- **Attribution:** Wikipedia text is CC BY-SA 4.0 and each passage links to its
-  article. CC-CEDICT is CC BY-SA 4.0. The HSK list is MIT.
+Sources:
+1. **Grammar examples** — the sheet's 971 sentences that are full sentences (fragments like 五个学生 are skipped),
+   with the sheet's translations. A sentence is never placed below its textbook level (1–2 simple, 3–4 ordinary,
+   5–6 complex, 7–9 scholar).
+2. **Tatoeba** — 60k Mandarin sentences with a human English translation; a random sample of
+   `--tatoeba-cap` (700) per tier, so it fills the everyday tiers without drowning the other sources.
+3. **Wikipedia** — individual sentences from featured-article lead sections (`fetch.py --lead`, 20 articles per
+   request; full-text `fetch.py --count` is much slower under Wikimedia rate limits). Only sentences with an
+   English translation ship; the rest are queued in `data/raw/wiki/pending.jsonl`, easiest tier first, for
+   `translate_local.py` (free, offline Argos; machine translation, labelled in the app) or `translate.py` (Claude).
+   Encyclopedia prose is hard: almost all of it grades Scholar.
+
+**Tiers** (`tier_of` in `build_pool.py`): each word gets its HSK 3.0 level; a sentence belongs to the smallest tier
+that holds at least 90% of its words. Simple = levels 1–2, Ordinary = 3–4, Complex = 5–6, Scholar = 7–9 or
+unlisted. Rules that keep this fair: an unlisted compound (这个, 不是) takes the level of its parts, and proper nouns
+(CC-CEDICT capitalised readings, surnames) do not count.
+
+Run order: `pip install jieba pypinyin opencc-python-reimplemented openpyxl requests` (+ `argostranslate` for
+local translation) → `python scripts/wiki/download.py` → `python scripts/merge/build_merged.py` →
+`python scripts/wiki/fetch.py --lead` → `python scripts/pool/build_pool.py` → `python scripts/wiki/translate_local.py`
+→ `python scripts/pool/build_pool.py` again to merge the new translations.
+(`pip install jieba` can fail on new setuptools: install `setuptools<70` first, or copy the package.)
+
+## Current state
+
+- **Stack:** plain HTML/CSS/JS, no framework, no bundler. Stay with it.
+- **Run it:** build the pool (above), then `python -m http.server 5173` from the repo root and open
+  `http://localhost:5173/src/`. It must be served over http: the app `fetch()`es the pool shards.
+- **Phone / shareable build:** `node scripts/bundle.mjs` inlines the page into `dist/jade.html` (git-ignored);
+  publish `data/build/pool/*` next to it as `pool/*` (`window.POOL_BASE`). The earlier private artifact
+  (https://claude.ai/artifact/NBDUjVAAHj41nSNnLkBdVd) predates the pool and is out of date.
+- **Look:** bold sans (Noto Sans SC/TC 700, subway-sign style), pinyin on by default, flat, fully opaque jade
+  (`--jade: #2b9b70`), hovered words turn deep jade (`--hover`).
+- **Build output shape** (`data/build/pool/<tier>-NNN.json`):
+  - `sentences[]`: `{ id, s, t, en, source: { type: 'grammar'|'tatoeba'|'wikipedia', title, url?, license, translation? }, tokens: [{ w, t?, py ('mì shū chù'), kind: 'word'|'char'|'punct'|'other' }] }`
+  - `words{simplified}`: `{ py: [syllable…], defs: [...], t?, hsk?, pos? }` — `hsk` is HSK 3.0 (7 = 7–9; absent = unlisted)
+  - `chars{simplified}`: `{ m, words: [simplified…] }` — reverse index, sorted by HSK 3.0 level then frequency
+- **UI:** the zoom is a stack (`word` → `char` → related `word` → …). Esc or click-away pops one level; Space or the
+  big button gives a new sentence. A single click/tap on a word opens it. Glyphs fly between levels with a FLIP
+  transform. Keys: P pinyin, S script, E English. The source line shows the Wikipedia article / Tatoeba sentence /
+  grammar lesson the sentence came from.
+- **Not yet handled:** tone sandhi (一/不) in displayed pinyin; homographs share one word entry (还 hái/huán show
+  the first reading's definitions first); the grammar link on examples is a heuristic.
 
 ## Layout
 
 ```
 CLAUDE.md
-data/raw/        # curated TSV/TXT now; original sheets and corpora later
-data/build/      # generated JSON (+ data.js) consumed by the app — do not hand-edit
-scripts/         # offline pipeline (build.mjs: validate + export)
+data/raw/        # sheets (xlsx), hsk30/, corrections.csv, translation cache; downloads are git-ignored
+data/merged/     # hsk_merged.csv + merge_report.md (committed)
+data/build/pool/ # generated sentence shards consumed by the app (git-ignored)
+docs/audit/      # data audit: issues vs hsk30 / CC-CEDICT
+scripts/merge/   # build_merged.py
+scripts/pool/    # build_pool.py
+scripts/wiki/    # download, fetch, translate, shared text helpers (process.py)
 src/             # front end: index.html, style.css, app.js
 .claude/         # launch.json for the local preview server
 ```
 
 ## Working conventions
 
-- **Order of work:** (1) clean the two sheets into structured data, (2) prototype the
-  sentence pipeline, (3) lock the JSON shape, (4) build the UI against that JSON.
+- **Order of work:** data first (merge → pool), then the UI against the pool JSON.
 - Prefer the simplest thing that demonstrates the interaction. Hard-code before configuring.
 - Keep functions small and comments sparse; match surrounding style.
 - Interaction details that matter:
@@ -184,9 +178,9 @@ src/             # front end: index.html, style.css, app.js
 
 ## Licensing notes
 
-CC-CEDICT is CC BY-SA, Tatoeba is CC-BY, and the grammar chart examples come from a
-third-party course. Keep attribution in the README. Confirm rights on the grammar
-sheet before any public release.
+CC-CEDICT and Wikipedia text are CC BY-SA (share-alike), Tatoeba is CC BY 2.0 FR, hsk30 is MIT, and the grammar
+chart examples come from a third-party course. The app's source line credits each sentence. Confirm rights on the
+grammar sheet before any public release; the `license` column of the merged CSV lets restricted rows be filtered out.
 
 ## Definition of done for the prototype
 

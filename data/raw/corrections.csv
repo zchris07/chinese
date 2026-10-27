@@ -1,0 +1,26 @@
+source_id,field,new_value,reason
+17,example_en,"Thursday, September 2",audit: spreadsheet auto-converted the cell to a date (2024-09-02)
+35,example_en,11:10,audit: spreadsheet auto-converted the cell to a time
+36,example_en,3:10 PM,audit: spreadsheet auto-converted the cell to a time
+562,example_en,3.14,audit: spreadsheet auto-converted the cell to a number
+563,example_en,1/5,audit: spreadsheet auto-converted the cell to a date (2024-01-05)
+375,example_en,"At home [you] rely on [your] parents, [when you] go out [you] rely on [your] friends.",audit: typo
+523,example_en,"Many relatives and friends suggested that he simply “squeeze out” the other three bookstores, [quick and dirty]. [That is, drive them out of their business.]",audit: typo
+612,example_en,"I didn't touch my cell phone for five hours, and I feel so empty [from not having anything to do] I could die.",audit: typo
+565,example_zh,如果乙方同意，甲方可以提前把产品交给乙方。,audit: typo (可以 duplicated)
+649,example_zh,(与其)说这是一本相册，倒不如说这是他大半生的历史。,audit: typo (像册 -> 相册)
+500,example_en,"He got injured while exercising, so it is hard for him to get around.",audit: translation did not match the Chinese (no body part in the source)
+619,example_en,"At New Year and other holidays the shops are busiest of all. They don't close for the holidays at all: if it's time to open, they have to open.",audit: translation did not match the Chinese
+708,example_en,The person sitting right at the front is my girlfriend.,audit: translation did not match the Chinese
+709,example_en,There is a free seat at the far north end; you may want to consider that spot.,audit: translation did not match the Chinese
+751,example_en,"He got into bed and, after three days and nights of bad sleep in a row, was finally able to sleep comfortably.",audit: translation did not match the Chinese
+734,example_en,"He has always responded to gentleness, not force, so you can't push him around.",audit: translation did not match the Chinese
+830,example_en,The birds' calls are sometimes long and sometimes short.,audit: translation did not match the Chinese
+845,example_en,"B: Right, they're already about to start primary school.",audit: translation did not match the Chinese
+847,example_en,I've met all the new leaders: they're really excellent!,audit: translation did not match the Chinese (没说的 = nothing to complain about)
+882,example_en,At our company he mainly handles projects.,audit: translation did not match the Chinese
+889,example_en,"Last year her husband died, and later her parents passed away too.","audit: translation did not match the Chinese (the source sentence is a 把 sentence of causation, not ""she killed"")"
+890,example_en,"She didn't make any money, and on top of that her husband ran off.",audit: translation did not match the Chinese
+899,example_en,He is even more of a robber than a real robber!,audit: translation did not match the Chinese
+1017,example_en,"As for grades, she has grades; as for looks, she has looks: she has it all.",audit: translation did not match the Chinese
+1018,example_en,He has no qualifications to speak of and no nerve either.,audit: translation did not match the Chinese
