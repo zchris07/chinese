@@ -1,0 +1,71 @@
+{
+ "shardSize": 150,
+ "tiers": {
+  "simple": {
+   "count": 785,
+   "files": [
+    "simple-000.json",
+    "simple-001.json",
+    "simple-002.json",
+    "simple-003.json",
+    "simple-004.json",
+    "simple-005.json"
+   ]
+  },
+  "ordinary": {
+   "count": 911,
+   "files": [
+    "ordinary-000.json",
+    "ordinary-001.json",
+    "ordinary-002.json",
+    "ordinary-003.json",
+    "ordinary-004.json",
+    "ordinary-005.json",
+    "ordinary-006.json"
+   ]
+  },
+  "complex": {
+   "count": 934,
+   "files": [
+    "complex-000.json",
+    "complex-001.json",
+    "complex-002.json",
+    "complex-003.json",
+    "complex-004.json",
+    "complex-005.json",
+    "complex-006.json"
+   ]
+  },
+  "advanced": {
+   "count": 1141,
+   "files": [
+    "advanced-000.json",
+    "advanced-001.json",
+    "advanced-002.json",
+    "advanced-003.json",
+    "advanced-004.json",
+    "advanced-005.json",
+    "advanced-006.json",
+    "advanced-007.json"
+   ]
+  },
+  "scholar": {
+   "count": 1171,
+   "files": [
+    "scholar-000.json",
+    "scholar-001.json",
+    "scholar-002.json",
+    "scholar-003.json",
+    "scholar-004.json",
+    "scholar-005.json",
+    "scholar-006.json",
+    "scholar-007.json"
+   ]
+  }
+ },
+ "sources": {
+  "tatoeba": 2800,
+  "wikipedia": 1171,
+  "grammar": 971
+ }
+}

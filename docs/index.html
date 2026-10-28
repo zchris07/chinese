@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jade Mandarin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;900&family=Noto+Sans+TC:wght@500;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="controls" aria-label="Settings">
+    <label class="select">
+      <span class="sr">Difficulty</span>
+      <select id="difficulty">
+        <option value="simple">Simple</option>
+        <option value="ordinary">Ordinary</option>
+        <option value="complex">Complex</option>
+        <option value="advanced">Advanced</option>
+        <option value="scholar">Scholar</option>
+      </select>
+    </label>
+    <button class="toggle" id="t-pinyin" aria-pressed="false" title="Pinyin (P)">pīn</button>
+    <button class="toggle" id="t-script" aria-pressed="false" title="Simplified / Traditional (S)">简</button>
+    <button class="toggle" id="t-english" aria-pressed="false" title="English translation (E)">EN</button>
+  </header>
+
+  <main id="stage">
+    <div class="inner">
+      <div id="sentence" class="sentence" lang="zh"></div>
+      <p id="translation" class="translation"></p>
+      <button class="new" id="next" title="New (Space)">New sentence ↻</button>
+      <p id="source" class="source"></p>
+      <a class="credits" href="credits.html">credits</a>
+    </div>
+  </main>
+
+  <section id="focus" class="focus" aria-live="polite"></section>
+
+  <script>window.POOL_BASE = 'pool/';</script>
+  <script src="app.js"></script>
+</body>
+</html>

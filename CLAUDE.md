@@ -131,9 +131,13 @@ local translation) → `python scripts/wiki/download.py` → `python scripts/mer
 - **Stack:** plain HTML/CSS/JS, no framework, no bundler. Stay with it.
 - **Run it:** build the pool (above), then `python -m http.server 5173` from the repo root and open
   `http://localhost:5173/src/`. It must be served over http: the app `fetch()`es the pool shards.
-- **Phone / shareable build:** `node scripts/bundle.mjs` inlines the page into `dist/jade.html` (git-ignored);
-  publish `data/build/pool/*` next to it as `pool/*` (`window.POOL_BASE`). The earlier private artifact
-  (https://claude.ai/artifact/NBDUjVAAHj41nSNnLkBdVd) predates the pool and is out of date.
+- **Hosting (static site in `docs/`):** `node scripts/build_site.mjs` (after the pool build) writes the whole site to
+  `docs/` — page, script, styles, credits, favicon and the pool shards (about 20 MB) — which GitHub Pages serves
+  ("Deploy from a branch", folder `/docs`). Any static host works the same way (Cloudflare Pages: no build command,
+  output directory `docs`). Everything uses relative URLs, so it works under a sub-path like `/chinese/`. Rebuild and
+  commit `docs/` whenever the pool or the UI changes. `docs/audit/` is served too. `node scripts/bundle.mjs`
+  still makes the single-file `dist/jade.html` for a claude.ai artifact (publish the pool beside it as `pool/*`);
+  the old artifact (https://claude.ai/artifact/NBDUjVAAHj41nSNnLkBdVd) predates the pool and is out of date.
 - **Look:** bold sans (Noto Sans SC/TC 700, subway-sign style), pinyin on by default, flat, fully opaque jade
   (`--jade: #2b9b70`), hovered words turn deep jade (`--hover`).
 - **Build output shape** (`data/build/pool/<tier>-NNN.json`):
@@ -154,11 +158,11 @@ CLAUDE.md
 data/raw/        # sheets (xlsx), hsk30/, corrections.csv, translation cache; downloads are git-ignored
 data/merged/     # hsk_merged.csv + merge_report.md (committed)
 data/build/pool/ # generated sentence shards consumed by the app (git-ignored)
-docs/audit/      # data audit: issues vs hsk30 / CC-CEDICT
+docs/            # the hosted static site (built by scripts/build_site.mjs); docs/audit/ = data audit
 scripts/merge/   # build_merged.py
 scripts/pool/    # build_pool.py
 scripts/wiki/    # download, fetch, translate, shared text helpers (process.py)
-src/             # front end: index.html, style.css, app.js
+src/             # front end: index.html, style.css, app.js, credits.html, favicon.svg
 .claude/         # launch.json for the local preview server
 ```
 
