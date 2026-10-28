@@ -18,7 +18,7 @@ Other languages may come later, so keep the data model language-agnostic
 **In scope**
 - Jade-green backdrop, white centered sentence, nothing else cluttering the screen.
 - New random sentence on **Space** or a button click.
-- Difficulty selector with four tiers: **Simple, Ordinary, Complex, Scholar** (see Sentence pool).
+- Difficulty selector with five tiers: **Simple, Ordinary, Complex, Advanced, Scholar** (see Sentence pool).
 - Toggles: pinyin, simplified/traditional, English translation.
 - Hover a word/character → its text changes shade. Multi-character words highlight
   as one unit; standalone single-character morphemes highlight alone.
@@ -48,7 +48,7 @@ Other languages may come later, so keep the data model language-agnostic
   - pinyin per token
   - segmentation into tokens (word-level), each token marked as a multi-character
     word or a single character
-  - tier (simple / ordinary / complex / scholar) and a source record (type, title, link, license)
+  - tier (simple / ordinary / complex / advanced / scholar) and a source record (type, title, link, license)
 - Word and character data live in separate lookup tables keyed by the token/character:
   - words: definitions (cleaned), pinyin with tone marks, HSK 3.0 level, part of speech
   - characters: general meaning, plus a reverse index of words that contain it
@@ -105,18 +105,19 @@ dictionary), contextual pinyin, traditional via OpenCC, word data from the merge
 Sources:
 1. **Grammar examples** — the sheet's 971 sentences that are full sentences (fragments like 五个学生 are skipped),
    with the sheet's translations. A sentence is never placed below its textbook level (1–2 simple, 3–4 ordinary,
-   5–6 complex, 7–9 scholar).
+   5–6 complex, 7–9 advanced).
 2. **Tatoeba** — 60k Mandarin sentences with a human English translation; a random sample of
    `--tatoeba-cap` (700) per tier, so it fills the everyday tiers without drowning the other sources.
 3. **Wikipedia** — individual sentences from featured-article lead sections (`fetch.py --lead`, 20 articles per
    request; full-text `fetch.py --count` is much slower under Wikimedia rate limits). Only sentences with an
-   English translation ship; the rest are queued in `data/raw/wiki/pending.jsonl`, easiest tier first, for
+   English translation ship; the rest are queued in `data/raw/wiki/pending.jsonl` for
    `translate_local.py` (free, offline Argos; machine translation, labelled in the app) or `translate.py` (Claude).
-   Encyclopedia prose is hard: almost all of it grades Scholar.
+   **Every Wikipedia sentence is Scholar**, whatever its vocabulary: encyclopedia prose is hard, and a few easy
+   sentences would not make it a different kind of text.
 
-**Tiers** (`tier_of` in `build_pool.py`): each word gets its HSK 3.0 level; a sentence belongs to the smallest tier
-that holds at least 90% of its words. Simple = levels 1–2, Ordinary = 3–4, Complex = 5–6, Scholar = 7–9 or
-unlisted. Rules that keep this fair: an unlisted compound (这个, 不是) takes the level of its parts, and proper nouns
+**Tiers** (`tier_of` in `build_pool.py`): each word gets its HSK 3.0 level; a sentence from the grammar sheet or
+Tatoeba belongs to the smallest tier that holds at least 90% of its words. Simple = levels 1–2, Ordinary = 3–4,
+Complex = 5–6, Advanced = 7–9 or unlisted. **Scholar** is not a vocabulary band: it holds all Wikipedia sentences. Rules that keep this fair: an unlisted compound (这个, 不是) takes the level of its parts, and proper nouns
 (CC-CEDICT capitalised readings, surnames) do not count.
 
 Run order: `pip install jieba pypinyin opencc-python-reimplemented openpyxl requests` (+ `argostranslate` for

@@ -1,7 +1,7 @@
 (() => {
   const words = {};
   const chars = {};
-  const TIERS = ['simple', 'ordinary', 'complex', 'scholar'];
+  const TIERS = ['simple', 'ordinary', 'complex', 'advanced', 'scholar'];
   const POOL_BASE = window.POOL_BASE || '../data/build/pool/';
 
   const $ = (id) => document.getElementById(id);

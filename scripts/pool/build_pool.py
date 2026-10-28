@@ -4,7 +4,7 @@ Three sources, each sentence analysed the same way (words, pinyin, traditional, 
   1. grammar examples   data/merged/hsk_merged.csv  (type=example, from the Language Player sheet)
   2. Tatoeba pairs       data/raw/tatoeba/*  (human translations, CC BY 2.0 FR; a random sample per tier)
   3. Wikipedia sentences data/raw/wiki/articles.jsonl + translations.jsonl (cached Argos translations)
-     Only translated sentences ship. The rest are queued in data/raw/wiki/pending.jsonl (easiest tier first) for
+     Only translated sentences ship. The rest are queued in data/raw/wiki/pending.jsonl for
      scripts/wiki/translate_local.py; re-run this script afterwards.
 
 Word data (HSK 3.0 level, part of speech, definitions) comes from the merged CSV; anything it lacks
@@ -34,7 +34,8 @@ from wiki.process import (CJK, T2S, good_paragraph, kind_of, load_cedict, paragr
 
 RAW = ROOT / 'data/raw'
 OUT = ROOT / 'data/build/pool'
-TIERS = ['simple', 'ordinary', 'complex', 'scholar']
+TIERS = ['simple', 'ordinary', 'complex', 'advanced', 'scholar']
+SCHOLAR = TIERS.index('scholar')  # every Wikipedia sentence, whatever its vocabulary
 BEYOND = 8  # level given to words that are not in the HSK 3.0 list
 COVER = 0.9  # share of words that must sit inside a band for the sentence to belong to it
 POS = {'N': 'noun', 'V': 'verb', 'Adj': 'adjective', 'Adv': 'adverb', 'M': 'measure word', 'Conj': 'conjunction',
@@ -52,7 +53,7 @@ def normalize_zh(s):
 
 
 def band(level):
-    """HSK 3.0 level -> tier index: 1-2 simple, 3-4 ordinary, 5-6 complex, 7-9 or unlisted scholar."""
+    """HSK 3.0 level -> tier index: 1-2 simple, 3-4 ordinary, 5-6 complex, 7-9 or unlisted advanced."""
     return 0 if level <= 2 else 1 if level <= 4 else 2 if level <= 6 else 3
 
 
@@ -257,7 +258,7 @@ def main():
                 lv = token_level(t['w'], t['syl'], lex, cedict)
                 if lv:
                     levels.append(lv)
-        tier = max(item['floor'], tier_of(levels))
+        tier = SCHOLAR if item['source']['type'] == 'wikipedia' else max(item['floor'], tier_of(levels))
         item.update(toks=toks, trad=traditional(toks), tier=tier)
         pool.append(item)
     print('dropped:', dict(dropped))
@@ -274,14 +275,13 @@ def main():
         keep.append(it)
     pool = keep
 
-    # Sentences still waiting for an English translation, easiest tiers first (scholar is plentiful).
+    # Wikipedia sentences still waiting for an English translation.
     todo = [it for it in pool if not it['en']]
     rng.shuffle(todo)
-    todo.sort(key=lambda it: it['tier'])
     with (RAW / 'wiki/pending.jsonl').open('w', encoding='utf8') as f:
         for it in todo:
             f.write(json.dumps({'id': it['id'], 'tier': TIERS[it['tier']], 'sentences': [it['s']]}, ensure_ascii=False) + '\n')
-    print(f'{len(todo)} sentences waiting for translation (by tier: ' + str({TIERS[t]: sum(1 for it in todo if it["tier"] == t) for t in range(4)}) + ')')
+    print(f'{len(todo)} sentences waiting for translation (by tier: ' + str({TIERS[t]: sum(1 for it in todo if it["tier"] == t) for t in range(len(TIERS))}) + ')')
     if not args.allow_untranslated:
         pool = [it for it in pool if it['en']]
 
