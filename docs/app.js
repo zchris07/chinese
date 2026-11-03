@@ -138,7 +138,7 @@
     if (stack.length) closeFocus(false);
     const id = ++renderId;
     stage.classList.add('swap');
-    await Promise.all([fontsFor(next.raw.s + (next.raw.t || '')), new Promise((r) => setTimeout(r, 180))]);
+    await Promise.all([fontsFor(next.raw.s + (next.raw.t || '')), new Promise((r) => setTimeout(r, 120))]);
     if (id !== renderId) return;
     current = next;
     renderContent();
@@ -188,9 +188,10 @@
     });
     const job = (drawing = { svgs: [], anims: [] });
     sentenceEl.classList.add('drawing');
-    const step = Math.min(90, 1500 / glyphs.length);
+    // A quick sweep: the pen reaches the last glyph in ~0.3 s whatever the length, each glyph fills right behind it.
+    const step = Math.min(26, 300 / glyphs.length);
+    const glow = (a) => `drop-shadow(0 0 ${a * 0.12}em rgba(255, 255, 255, ${a * 0.85}))`;
     const first = new Map();
-    let last = null;
     info.forEach((m, i) => {
       const svg = document.createElementNS(NS, 'svg');
       svg.setAttribute('class', 'ink');
@@ -205,24 +206,28 @@
       const len = m.size * 12;
       Object.assign(text.style, {
         fontFamily: m.font, fontWeight: m.weight, fontSize: `${m.size}px`,
-        strokeWidth: `${Math.max(1, m.size * 0.022)}px`, strokeDasharray: `${len} ${len}`,
+        strokeWidth: `${Math.max(0.8, m.size * 0.014)}px`, strokeDasharray: `${len} ${len}`,
       });
       svg.appendChild(text);
       m.g.appendChild(svg);
       job.svgs.push(svg);
       const delay = i * step;
-      job.anims.push(text.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }],
-        { duration: 950, delay, easing: 'cubic-bezier(.5,.05,.3,1)', fill: 'both' }));
-      last = text.animate([{ fillOpacity: 0 }, { fillOpacity: 1 }], { duration: 360, delay: delay + 620, easing: 'ease-out', fill: 'both' });
-      job.anims.push(last);
+      const opts = (duration, extra = 0, easing = 'cubic-bezier(.2,.7,.2,1)') => ({ duration, delay: delay + extra, easing, fill: 'both' });
+      // pen line traces the outline fast, then thins out as the ink arrives
+      job.anims.push(text.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], opts(320, 0, 'cubic-bezier(.25,.6,.3,1)')));
+      job.anims.push(text.animate([{ strokeOpacity: 1 }, { strokeOpacity: 1, offset: 0.55 }, { strokeOpacity: 0 }], opts(520)));
+      job.anims.push(text.animate([{ fillOpacity: 0 }, { fillOpacity: 1 }], opts(240, 140, 'ease-out')));
+      // a soft glow and a small settle, both gone by the time the overlay is removed
+      job.anims.push(svg.animate([{ filter: glow(1), transform: 'translateY(0.05em) scale(1.04)' }, { filter: glow(0), transform: 'none' }], opts(560)));
       const tok = m.g.closest('.tok');
       if (!first.has(tok)) first.set(tok, delay);
     });
     for (const [tok, delay] of first) {
       const py = tok.querySelector('.py');
-      if (py) job.anims.push(py.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: delay + 450, fill: 'both' }));
+      if (py) job.anims.push(py.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 260, delay: delay + 160, easing: 'ease-out', fill: 'both' }));
     }
-    last.finished.then(() => { if (drawing === job) stopDrawing(); }).catch(() => {});
+    Promise.all(job.anims.map((a) => a.finished)).then(() => { if (drawing === job) stopDrawing(); }).catch(() => {});
   }
 
   // ---------- focus levels ----------

@@ -207,7 +207,7 @@ body.english .translation { visibility: visible; }
 .hz .c { display: inline-block; position: relative; }
 .hz .c .probe { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
 .drawing .hz .c { color: transparent !important; }
-.ink { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.ink { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; transform-origin: 50% 55%; will-change: transform, filter; }
 .ink text { fill: currentColor; stroke: currentColor; stroke-linejoin: round; stroke-linecap: round; }
 
 /* Save button in the word / character views */
