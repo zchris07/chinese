@@ -39,7 +39,7 @@ body {
 }
 .controls:hover, .controls:focus-within { opacity: 1; }
 
-.controls select, .controls button.toggle {
+.controls select, .controls button.toggle, .controls button.tool {
   font: 500 13px var(--ui);
   color: var(--ink);
   background: var(--panel);
@@ -50,6 +50,10 @@ body {
 }
 .controls select option { color: #0b3d2e; }
 .controls button.toggle { min-width: 40px; font-family: var(--zh), var(--ui); }
+.controls button.tool { display: inline-flex; align-items: center; gap: 6px; }
+.controls .tool .count:empty { display: none; }
+.controls .tool .count { background: var(--ink); color: var(--jade-deep); border-radius: 999px; padding: 0 6px; font-size: 11px; line-height: 16px; }
+.controls .tool:first-child { margin-right: auto; }
 .controls button[aria-pressed='true'] { background: var(--ink); color: var(--jade-deep); }
 .controls button:focus-visible, .controls select:focus-visible { outline: 2px solid var(--hover); outline-offset: 2px; }
 
@@ -114,9 +118,20 @@ body.pinyin .tok .py { display: block; }
 }
 body.english .translation { visibility: visible; }
 
-/* Big new-sentence button under the sentence */
+/* Big new-sentence button under the sentence, with the save star beside it */
+.actions { margin-top: 2rem; display: flex; align-items: center; gap: 12px; }
+.star {
+  width: 3.2em; height: 3.2em; border-radius: 50%;
+  font: 700 clamp(1.1rem, 3.4vw, 1.4rem) var(--ui);
+  color: var(--ink); background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.55); cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+}
+.star:hover { border-color: var(--ink); }
+.star[aria-pressed='true'] { background: var(--ink); color: var(--jade-deep); border-color: var(--ink); }
+.star:active { transform: scale(0.94); }
+.star:focus-visible { outline: 3px solid var(--jade-deep); outline-offset: 3px; }
 .new {
-  margin-top: 2rem;
   font: 700 clamp(1.1rem, 3.4vw, 1.5rem) var(--ui);
   color: var(--jade-deep); background: var(--ink);
   border: 0; border-radius: 999px;
@@ -187,3 +202,69 @@ body.english .translation { visibility: visible; }
 
 .credits { display: block; margin-top: 1.5rem; text-align: center; font-size: .75rem; color: rgba(255, 255, 255, .55); text-decoration: none; }
 .credits:hover { color: #fff; text-decoration: underline; }
+
+/* Draw-in: per-character ink overlay (see drawSentence in app.js) */
+.hz .c { display: inline-block; position: relative; }
+.hz .c .probe { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
+.drawing .hz .c { color: transparent !important; }
+.ink { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.ink text { fill: currentColor; stroke: currentColor; stroke-linejoin: round; stroke-linecap: round; }
+
+/* Save button in the word / character views */
+.fview .save {
+  margin-top: 12px; font: 500 13px var(--ui); color: var(--ink);
+  background: var(--panel); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 999px;
+  padding: 5px 14px; cursor: pointer; animation: rise 360ms 120ms both cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.fview .save[aria-pressed='true'] { background: var(--ink); color: var(--jade-deep); }
+
+/* Lookup / saved panel */
+.panel {
+  position: fixed; inset: 0; z-index: 20;
+  display: flex; justify-content: center; align-items: flex-start;
+  padding: calc(64px + env(safe-area-inset-top, 0px)) 16px 24px;
+  background: rgba(6, 40, 29, 0.45);
+  opacity: 0; transition: opacity 180ms ease;
+}
+.panel[hidden] { display: none; }
+.panel.on { opacity: 1; }
+.panel .card {
+  width: min(36rem, 100%); max-height: 100%; overflow-y: auto;
+  background: #23855f; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 18px;
+  padding: 16px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+}
+.panel .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.panel h2 { margin: 0; font: 500 13px var(--ui); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+.panel .close { font: 400 24px/1 var(--ui); color: var(--ink); background: none; border: 0; cursor: pointer; padding: 2px 6px; }
+.lookup input {
+  width: 100%; font: 500 1.1rem var(--ui); color: var(--jade-deep);
+  background: var(--ink); border: 0; border-radius: 12px; padding: 12px 14px;
+}
+.lookup input:focus { outline: 3px solid var(--jade-deep); outline-offset: 1px; }
+.results { list-style: none; margin: 10px 0 0; padding: 0; }
+.results li {
+  display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: baseline;
+  padding: 10px 12px; border-radius: 12px; cursor: pointer;
+}
+.results li[aria-selected='true'] { background: rgba(255, 255, 255, 0.14); }
+.results .rw { grid-row: span 2; font: 700 1.6rem var(--zh); }
+.results .rp { font-size: 12px; color: var(--ink-soft); }
+.results .rd { font-size: 14px; color: var(--ink); }
+.results mark, .saved mark { background: none; color: var(--armed); font-weight: 600; }
+.hint { margin: 10px 4px 2px; font-size: 13px; color: var(--ink-faint); }
+.hint:empty { display: none; }
+.saved h3 { font: 500 12px var(--ui); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin: 14px 4px 6px; }
+.saved h3 span { opacity: 0.7; }
+.saved ul { list-style: none; margin: 0; padding: 0; }
+.saved li { display: flex; align-items: center; gap: 6px; }
+.saved .open {
+  flex: 1; display: flex; flex-direction: column; gap: 2px; text-align: left;
+  font: inherit; color: var(--ink); background: none; border: 0; border-radius: 12px; padding: 8px 10px; cursor: pointer;
+}
+.saved .open:hover { background: rgba(255, 255, 255, 0.12); }
+.saved .zh { font: 700 1.2rem var(--zh); }
+.saved .sub { font-size: 12px; color: var(--ink-soft); }
+.saved .del { font: 400 20px/1 var(--ui); color: var(--ink-faint); background: none; border: 0; cursor: pointer; padding: 4px 8px; }
+.saved .del:hover { color: var(--ink); }
+.saved .empty { color: var(--ink-soft); font-size: 14px; margin: 6px 4px; }
+.saved kbd { font: 500 12px var(--ui); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 4px; padding: 0 4px; }

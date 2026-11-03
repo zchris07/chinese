@@ -12,6 +12,11 @@
 </head>
 <body>
   <header class="controls" aria-label="Settings">
+    <button class="tool" id="b-lookup" title="Look up an English word (/)" aria-label="Look up an English word">
+      <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <span>Look up</span>
+    </button>
+    <button class="tool" id="b-saved" title="Saved sentences, words and characters">★ <span>Saved</span> <span id="saved-count" class="count"></span></button>
     <label class="select">
       <span class="sr">Difficulty</span>
       <select id="difficulty">
@@ -31,13 +36,32 @@
     <div class="inner">
       <div id="sentence" class="sentence" lang="zh"></div>
       <p id="translation" class="translation"></p>
-      <button class="new" id="next" title="New (Space)">New sentence ↻</button>
+      <div class="actions">
+        <button class="star" id="save-sentence" aria-pressed="false" title="Save this sentence (B)" aria-label="Save this sentence">☆</button>
+        <button class="new" id="next" title="New (Space)">New sentence ↻</button>
+      </div>
       <p id="source" class="source"></p>
       <a class="credits" href="credits.html">credits</a>
     </div>
   </main>
 
   <section id="focus" class="focus" aria-live="polite"></section>
+
+  <section id="panel" class="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" hidden>
+    <div class="card">
+      <div class="head">
+        <h2 id="panel-title">Look up</h2>
+        <button class="close" id="panel-close" aria-label="Close">×</button>
+      </div>
+      <div id="lookup" class="lookup">
+        <input id="q" type="search" placeholder="Type an English word or phrase…" autocomplete="off" autocapitalize="off" spellcheck="false"
+          role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list" aria-label="English word or phrase">
+        <ul id="results" class="results" role="listbox"></ul>
+        <p id="lookup-hint" class="hint"></p>
+      </div>
+      <div id="saved" class="saved"></div>
+    </div>
+  </section>
 
   <script>window.POOL_BASE = 'pool/';</script>
   <script src="app.js"></script>

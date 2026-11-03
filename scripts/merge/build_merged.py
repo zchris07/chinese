@@ -91,6 +91,11 @@ def load_cedict():
     return entries
 
 
+def proper_last(e):
+    """Common readings before proper-noun ones (CC-CEDICT capitalises names): 还 'to return' before 'surname Huan'."""
+    return e['py'][:1].isupper()
+
+
 def pick_entries(cedict, simp, py):
     es = cedict.get(simp, [])
     want = loose(py)
@@ -156,7 +161,7 @@ def build_words(cedict, freq, report):
     rows = []
     for f in forms:
         exact, allv = pick_entries(cedict, f['s'], f['py'])
-        chosen = exact or allv[:1]
+        chosen = sorted(exact, key=proper_last) or allv[:1]
         defs = []
         cl = []
         for e in chosen:
@@ -190,7 +195,7 @@ def build_words(cedict, freq, report):
     extra = [r for r in sheet if r['row'] not in used]
     for r in extra:
         exact, allv = pick_entries(cedict, r['w'], numbered_to_marks(r['py']))
-        chosen = exact or allv[:1]
+        chosen = sorted(exact, key=proper_last) or allv[:1]
         defs, cl = [], []
         for e in chosen:
             defs += [d for d in e['defs'] if d not in defs]

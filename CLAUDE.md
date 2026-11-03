@@ -29,10 +29,15 @@ Other languages may come later, so keep the data model language-agnostic
   other words containing it.
 - Click-away / Escape steps back out one level.
 - A pipeline-built sentence pool of a few thousand sentences is enough.
+- **Draw-in animation** on every new sentence: each character's outline is traced, then filled, left to right.
+- **English lookup** (`/` or the Look up button): type English, get Chinese words as you type; a result opens the
+  normal word view (and drills into characters).
+- **Bookmarks** (`B` or ☆): save the sentence, word or character on screen; the Saved panel lists and reopens them.
+  Stored in the browser only (localStorage), no account.
 
 **Out of scope (post-prototype)**
 - Accounts, login, server-side persistence, spaced repetition, quizzes, Anki export.
-- Audio/TTS, stroke-order animation, grammar-pattern callouts.
+- Audio/TTS, true stroke-order animation (the draw-in traces font outlines, not stroke order), grammar-pattern callouts.
 - Other languages, native mobile apps, analytics, monetization.
 - Live runtime translation or sentence generation (see Data rules).
 
@@ -144,10 +149,23 @@ local translation) → `python scripts/wiki/download.py` → `python scripts/mer
   - `sentences[]`: `{ id, s, t, en, source: { type: 'grammar'|'tatoeba'|'wikipedia', title, url?, license, translation? }, tokens: [{ w, t?, py ('mì shū chù'), kind: 'word'|'char'|'punct'|'other' }] }`
   - `words{simplified}`: `{ py: [syllable…], defs: [...], t?, hsk?, pos? }` — `hsk` is HSK 3.0 (7 = 7–9; absent = unlisted)
   - `chars{simplified}`: `{ m, words: [simplified…] }` — reverse index, sorted by HSK 3.0 level then frequency
+  - `lookup.json` (English search, ~1.7 MB, ~680 KB gzipped, loaded the first time the panel opens):
+    `entries: [[simplified, traditional|'', 'syl syl', hsk3|0, pos, [senses], frequency rank]]` for every merged-CSV
+    word plus every word the pool uses (15k), and `chars: {char: meaning}`
 - **UI:** the zoom is a stack (`word` → `char` → related `word` → …). Esc or click-away pops one level; Space or the
   big button gives a new sentence. A single click/tap on a word opens it. Glyphs fly between levels with a FLIP
-  transform. Keys: P pinyin, S script, E English. The source line shows the Wikipedia article / Tatoeba sentence /
-  grammar lesson the sentence came from.
+  transform. Keys: P pinyin, S script, E English, / lookup, B save. The source line shows the Wikipedia article /
+  Tatoeba sentence / grammar lesson the sentence came from.
+- **Draw-in** (`drawSentence` in `app.js`): each `.hz .c` glyph gets an absolutely positioned SVG `<text>` copy laid on
+  its baseline (measured with a zero-size probe), animated with `stroke-dashoffset` then `fill-opacity` via the Web
+  Animations API; the real text is transparent meanwhile and returns when the overlays are removed. Any click,
+  new sentence or re-render cancels it; `prefers-reduced-motion` skips it. Fonts are loaded for the sentence first.
+- **Lookup ranking** (`search` in `app.js`): a token index over English senses; the last word is a prefix while
+  typing; filler words (to/a/an/the) are ignored; each `;`/`,` part of a sense is scored (exact > starts with >
+  contains), then by sense order, length, HSK level and frequency. Chinese input matches the word itself.
+  Opening something from the lookup or Saved panel and backing out (Esc) returns to that panel.
+- **Bookmarks** live under `localStorage['jade-bookmarks-v1']`; each carries the word/character data it needs, so it
+  still opens after the pool is rebuilt.
 - **Not yet handled:** tone sandhi (一/不) in displayed pinyin; homographs share one word entry (还 hái/huán show
   the first reading's definitions first); the grammar link on examples is a heuristic.
 

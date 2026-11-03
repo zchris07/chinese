@@ -221,6 +221,50 @@ def wiki_sentences(args, rng):
     return out, rejected
 
 
+# ---------- English lookup ----------
+def syllables(w, py, cedict):
+    """One tone-marked syllable per character, preferring the CC-CEDICT reading that matches."""
+    key = loose(py)
+    for e in sorted(cedict.get(w, []), key=lambda e: e['py'][0][:1].isupper()):
+        if len(e['py']) == len(w) and loose(''.join(e['py'])) == key:
+            return e['py']
+    return lazy_pinyin(w, style=Style.TONE)
+
+
+def write_lookup(lex, cedict, corpus_freq):
+    """English -> Chinese search data for the app: every word in the merged CSV plus every word the pool uses.
+
+    entries: [simplified, traditional ('' if same), 'syl syl', hsk3 (0 = unlisted), pos, [senses], frequency rank]
+    chars:   {character: general meaning}, so the character view works for looked-up words.
+    """
+    entries, seen = [], set()
+    for w, es in lex.items():
+        for e in es:
+            if e['defs']:
+                entries.append([w, e['t'] if e['t'] and e['t'] != w else '', ' '.join(syllables(w, e['py'], cedict)),
+                                e['hsk'] or 0, e['pos'], e['defs'][:6], e['freq']])
+                seen.add(w)
+    for w, n in corpus_freq.most_common():
+        es = cedict.get(w)
+        if w in seen or not es or not all(CJK.match(c) for c in w):
+            continue
+        defs = pick_defs(es, es[0]['py'])[:6]
+        if defs:
+            entries.append([w, es[0]['t'] if es[0]['t'] != w else '', ' '.join(es[0]['py']), 0, '', defs, 10 ** 6 - n])
+    chars = {}
+    for e in entries:
+        for c in e[0]:
+            if c not in chars and CJK.match(c):
+                m = []
+                for x in cedict.get(c, []):
+                    m += [d for d in x['defs'] if d not in m]
+                chars[c] = '; '.join(m[:4])
+    (OUT / 'lookup.json').write_text(json.dumps({'entries': entries, 'chars': chars}, ensure_ascii=False, separators=(',', ':')),
+                                     encoding='utf8')
+    print(f'lookup: {len(entries)} entries, {len(chars)} characters')
+    return 'lookup.json'
+
+
 # ---------- main ----------
 def main():
     ap = argparse.ArgumentParser()
@@ -358,6 +402,7 @@ def main():
             files.append(name)
         index['tiers'][tier] = {'count': len(group), 'files': files}
 
+    index['lookup'] = write_lookup(lex, cedict, corpus_freq)
     (OUT / 'index.json').write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding='utf8')
     size = sum(p.stat().st_size for p in OUT.glob('*.json')) / 1e6
     by_src = Counter((TIERS[it['tier']], it['source']['type']) for it in pool)

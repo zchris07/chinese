@@ -67,5 +67,6 @@
   "tatoeba": 2800,
   "wikipedia": 1171,
   "grammar": 971
- }
+ },
+ "lookup": "lookup.json"
 }

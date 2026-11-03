@@ -60,8 +60,11 @@ def clean_defs(raw):
         if not d or d.startswith(('CL:', 'old variant of', 'variant of', 'see ', 'Taiwan pr.')):
             continue
         d = re.sub(r'\[[^\]]*\]', '', d)              # drop inline pinyin like [zhong1]
+        d = re.sub(r'\s*\([^()]*\bpr\.[^()]*\)', '', d)   # "(Taiwan pr. [...])", "(also pr. [...])"
         d = re.sub(r'[㐀-鿿]+\|[㐀-鿿]+', lambda m: m.group(0).split('|')[1], d)
         d = re.sub(r'\s+', ' ', d).strip(' ,;')
+        if re.match(r'(\w+ )?pr\.(\s|$)', d):  # pronunciation notes: "also pr. [...]", "Beijing pr. [...]"
+            continue
         if d and d not in out:
             out.append(d)
     return out
