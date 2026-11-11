@@ -29,7 +29,8 @@ Other languages may come later, so keep the data model language-agnostic
   other words containing it.
 - Click-away / Escape steps back out one level.
 - A pipeline-built sentence pool of a few thousand sentences is enough.
-- **Draw-in animation** on every new sentence: each character's outline is traced, then filled, left to right.
+- **Writing-in animation** on every new sentence: the stroop writing used in football explained and freestyle
+  (each letter's outline stroked on, then inked), for the characters and their pinyin.
 - **English lookup** (`/` or the Look up button): type English, get Chinese words as you type; a result opens the
   normal word view (and drills into characters).
 - **Bookmarks** (`B` or ☆): save the sentence, word or character on screen; the Saved panel lists and reopens them.
@@ -37,7 +38,7 @@ Other languages may come later, so keep the data model language-agnostic
 
 **Out of scope (post-prototype)**
 - Accounts, login, server-side persistence, spaced repetition, quizzes, Anki export.
-- Audio/TTS, true stroke-order animation (the draw-in traces font outlines, not stroke order), grammar-pattern callouts.
+- Audio/TTS, true stroke-order animation (the writing-in traces font outlines, not stroke order), grammar-pattern callouts.
 - Other languages, native mobile apps, analytics, monetization.
 - Live runtime translation or sentence generation (see Data rules).
 
@@ -137,7 +138,7 @@ local translation) → `python scripts/wiki/download.py` → `python scripts/mer
 - **Run it:** build the pool (above), then `python -m http.server 5173` from the repo root and open
   `http://localhost:5173/src/`. It must be served over http: the app `fetch()`es the pool shards.
 - **Hosting (static site in `docs/`):** `node scripts/build_site.mjs` (after the pool build) writes the whole site to
-  `docs/` — page, script, styles, credits, favicon and the pool shards (about 20 MB) — which GitHub Pages serves
+  `docs/` — page, script, styles, favicon and the pool shards (about 20 MB) — which GitHub Pages serves
   ("Deploy from a branch", folder `/docs`). Any static host works the same way (Cloudflare Pages: no build command,
   output directory `docs`). Everything uses relative URLs, so it works under a sub-path like `/chinese/`. Rebuild and
   commit `docs/` whenever the pool or the UI changes. `docs/audit/` is served too. `node scripts/bundle.mjs`
@@ -154,12 +155,17 @@ local translation) → `python scripts/wiki/download.py` → `python scripts/mer
     word plus every word the pool uses (15k), and `chars: {char: meaning}`
 - **UI:** the zoom is a stack (`word` → `char` → related `word` → …). Esc or click-away pops one level; Space or the
   big button gives a new sentence. A single click/tap on a word opens it. Glyphs fly between levels with a FLIP
-  transform. Keys: P pinyin, S script, E English, / lookup, B save. The source line shows the Wikipedia article /
-  Tatoeba sentence / grammar lesson the sentence came from.
-- **Draw-in** (`drawSentence` in `app.js`): each `.hz .c` glyph gets an absolutely positioned SVG `<text>` copy laid on
-  its baseline (measured with a zero-size probe), animated with `stroke-dashoffset` then `fill-opacity` via the Web
-  Animations API; the real text is transparent meanwhile and returns when the overlays are removed. Any click,
-  new sentence or re-render cancels it; `prefers-reduced-motion` skips it. Fonts are loaded for the sentence first.
+  transform. Keys: P pinyin, S script, E English, / lookup, B save. No source caption and no credits page (removed at
+  the owner's request); each sentence's `source` record is still in the pool data.
+- **No text cursor or selection** anywhere except the search box: `body { cursor: default; user-select: none }`,
+  `input` opts back in. Clickable things keep `cursor: pointer`.
+- **Writing-in** (`writeSentence` / `writeRun` in `app.js`, CSS `.wr`): ported from football explained / freestyle.
+  Each run (a character `.c.wr`, or a token's pinyin `.py.wr`) gets an SVG copy laid on its baseline (zero-size probe),
+  one `<text>` per letter at the position the whole run would give it. Each letter's outline is stroked on (1.1 px,
+  `stroke-dasharray: var(--len) 100000`, 0.575 s) and inked 240 ms later (0.375 s). Tokens start 1/60 s apart,
+  letters 14 ms. The real text (`.wt`) is transparent meanwhile; the written copy then stays on screen and follows the
+  element's colour (hovers work). A re-render or a window resize hands back to the plain text;
+  `prefers-reduced-motion` skips it. Fonts are loaded for the sentence first.
 - **Lookup ranking** (`search` in `app.js`): a token index over English senses; the last word is a prefix while
   typing; filler words (to/a/an/the) are ignored; each `;`/`,` part of a sense is scored (exact > starts with >
   contains), then by sense order, length, HSK level and frequency. Chinese input matches the word itself.
@@ -180,7 +186,7 @@ docs/            # the hosted static site (built by scripts/build_site.mjs); doc
 scripts/merge/   # build_merged.py
 scripts/pool/    # build_pool.py
 scripts/wiki/    # download, fetch, translate, shared text helpers (process.py)
-src/             # front end: index.html, style.css, app.js, credits.html, favicon.svg
+src/             # front end: index.html, style.css, app.js, favicon.svg
 .claude/         # launch.json for the local preview server
 ```
 
@@ -202,8 +208,10 @@ src/             # front end: index.html, style.css, app.js, credits.html, favic
 ## Licensing notes
 
 CC-CEDICT and Wikipedia text are CC BY-SA (share-alike), Tatoeba is CC BY 2.0 FR, hsk30 is MIT, and the grammar
-chart examples come from a third-party course. The app's source line credits each sentence. Confirm rights on the
-grammar sheet before any public release; the `license` column of the merged CSV lets restricted rows be filtered out.
+chart examples come from a third-party course. The on-screen source caption and the credits page were removed at the
+owner's request, so the hosted site currently shows no attribution: CC BY / CC BY-SA require it, so restore a credit
+(even a small one) before relying on this publicly. Confirm rights on the grammar sheet before any public release; the
+`license` column of the merged CSV lets restricted rows be filtered out.
 
 ## Definition of done for the prototype
 

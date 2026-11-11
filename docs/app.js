@@ -11,7 +11,6 @@
   const stage = $('stage');
   const sentenceEl = $('sentence');
   const translationEl = $('translation');
-  const sourceEl = $('source');
   const nextBtn = $('next');
   const focus = $('focus');
   const panel = $('panel');
@@ -97,7 +96,6 @@
 
   // ---------- sentence level ----------
   function renderContent() {
-    stopDrawing();
     sentenceEl.innerHTML = '';
     current.sentences.forEach((s, si) => {
       s.tokens.forEach((tok, ti) => {
@@ -111,29 +109,21 @@
           el.setAttribute('role', 'button');
           el.setAttribute('aria-label', `${tok.w} ${py}`);
         }
-        const glyphs = [...show(tok.w, tok.t)].map((c) => `<span class="c">${esc(c)}</span>`).join('');
-        el.innerHTML = `<span class="py">${py || '&nbsp;'}</span><span class="hz">${glyphs}</span>`;
+        // .wr runs are what the writing animation draws; .wt holds the real text underneath
+        const glyphs = [...show(tok.w, tok.t)].map((c) => `<span class="c wr"><span class="wt">${esc(c)}</span></span>`).join('');
+        const pinyin = py ? `<span class="py wr"><span class="wt">${esc(py)}</span></span>` : '<span class="py">&nbsp;</span>';
+        el.innerHTML = `${pinyin}<span class="hz">${glyphs}</span>`;
         sentenceEl.appendChild(el);
       });
     });
     const en = current.sentences.map((s) => s.en).filter(Boolean).join(' ');
     translationEl.textContent = en || 'No English translation yet for this sentence.';
     translationEl.classList.toggle('missing', !en);
-    sourceEl.innerHTML = sourceHtml(current.source);
     stage.scrollTop = 0;
     updateMarkUI();
   }
 
-  function sourceHtml(src) {
-    if (!src) return '';
-    const link = (text) => (src.url ? `<a href="${esc(src.url)}" target="_blank" rel="noopener">${esc(text)}</a>` : esc(text));
-    const from = src.type === 'wikipedia' ? `From Wikipedia: ${link(src.title)} · ${esc(src.license)}`
-      : src.type === 'tatoeba' ? `From Tatoeba: ${link(src.title)} · ${esc(src.license)}`
-      : `Grammar example: ${esc(src.title)} · lesson ${link(src.code)}`;
-    return from + (src.translation && settings.english ? `<br>English: ${esc(src.translation)}` : '');
-  }
-
-  // Show a sentence: fade the old one out, then draw the new one in.
+  // Show a sentence: fade the old one out, then write the new one in.
   async function present(next) {
     if (stack.length) closeFocus(false);
     const id = ++renderId;
@@ -142,12 +132,11 @@
     if (id !== renderId) return;
     current = next;
     renderContent();
-    drawSentence();
+    writeSentence();
     stage.classList.remove('swap');
   }
 
   async function nextSentence() {
-    stopDrawing();
     let next;
     try {
       next = await pickSentence();
@@ -159,76 +148,76 @@
     present(next);
   }
 
-  // ---------- draw-in animation ----------
-  // Each character is traced as an outline (SVG stroke-dashoffset on a copy of the glyph laid exactly over it),
-  // then filled, one after another. The real text stays in place underneath and reappears when the ink is done.
-  let drawing = null;
-  function stopDrawing() {
-    if (!drawing) return;
-    drawing.anims.forEach((a) => a.cancel());
-    drawing.svgs.forEach((s) => s.remove());
-    sentenceEl.classList.remove('drawing');
-    drawing = null;
+  // ---------- writing in ----------
+  // The stroop writing, as in football explained and freestyle: an SVG copy of each run (a character, or a token's
+  // pinyin) is laid exactly over it, one <text> per letter. Each letter's outline is stroked on (one dash and an
+  // endless gap, so no part of it can vanish and come back), then inked. Tokens start 1/60 s apart, letters 14 ms.
+  // The written copy stays on screen (handing back to the plain text would change the weight at the last moment)
+  // and takes the element's colour, so hovers still work. A re-render or a resize clears it.
+  const WORD_MS = 1000 / 60;
+  const LETTER_MS = 14;
+
+  function clearInk() {
+    sentenceEl.querySelectorAll('.wr.writing').forEach((w) => { w.classList.remove('writing'); w.querySelector('svg')?.remove(); });
   }
 
-  function drawSentence() {
-    stopDrawing();
-    const glyphs = [...sentenceEl.querySelectorAll('.hz .c')];
-    if (reduceMotion.matches || !glyphs.length) return;
-    // Measure everything first, before hiding the text.
-    const info = glyphs.map((g) => {
-      const probe = document.createElement('span');
-      probe.className = 'probe';
-      g.appendChild(probe);
-      const box = g.getBoundingClientRect();
-      const baseline = probe.getBoundingClientRect().top - box.top;
-      probe.remove();
-      const cs = getComputedStyle(g);
-      return { g, box, baseline, size: parseFloat(cs.fontSize), font: cs.fontFamily, weight: cs.fontWeight, color: cs.color };
+  function writeRun(w, d0) {
+    const box = w.getBoundingClientRect();
+    if (!box.width) return;
+    // The run's baseline, read from the page's own layout (an empty inline box sits on it).
+    const probe = document.createElement('span');
+    probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+    w.firstChild.append(probe);
+    const base = probe.getBoundingClientRect().top - box.top;
+    probe.remove();
+    const cs = getComputedStyle(w);
+    const size = parseFloat(cs.fontSize);
+    const text = w.firstChild.textContent;
+    const g = document.createElementNS(NS, 'svg');
+    g.setAttribute('width', box.width);
+    g.setAttribute('height', box.height);
+    g.setAttribute('aria-hidden', 'true');
+    Object.assign(g.style, { fontFamily: cs.fontFamily, fontWeight: cs.fontWeight, fontSize: cs.fontSize, letterSpacing: cs.letterSpacing });
+    w.append(g);
+    // Each letter goes exactly where the whole run would put it, so spacing is kept.
+    const whole = document.createElementNS(NS, 'text');
+    whole.setAttribute('x', 0);
+    whole.setAttribute('y', base);
+    whole.textContent = text;
+    g.append(whole);
+    let at = 0;
+    const letters = [...text].map((ch) => {
+      const l = { ch, x: whole.getStartPositionOfChar(at).x, wd: whole.getExtentOfChar(at).width };
+      at += ch.length;
+      return l;
     });
-    const job = (drawing = { svgs: [], anims: [] });
-    sentenceEl.classList.add('drawing');
-    // A quick sweep: the pen reaches the last glyph in ~0.3 s whatever the length, each glyph fills right behind it.
-    const step = Math.min(26, 300 / glyphs.length);
-    const glow = (a) => `drop-shadow(0 0 ${a * 0.12}em rgba(255, 255, 255, ${a * 0.85}))`;
-    const first = new Map();
-    info.forEach((m, i) => {
-      const svg = document.createElementNS(NS, 'svg');
-      svg.setAttribute('class', 'ink');
-      svg.setAttribute('aria-hidden', 'true');
-      svg.setAttribute('width', m.box.width);
-      svg.setAttribute('height', m.box.height);
-      svg.style.color = m.color;
-      const text = document.createElementNS(NS, 'text');
-      text.setAttribute('x', 0);
-      text.setAttribute('y', m.baseline);
-      text.textContent = m.g.textContent;
-      const len = m.size * 12;
-      Object.assign(text.style, {
-        fontFamily: m.font, fontWeight: m.weight, fontSize: `${m.size}px`,
-        strokeWidth: `${Math.max(0.8, m.size * 0.014)}px`, strokeDasharray: `${len} ${len}`,
-      });
-      svg.appendChild(text);
-      m.g.appendChild(svg);
-      job.svgs.push(svg);
-      const delay = i * step;
-      const opts = (duration, extra = 0, easing = 'cubic-bezier(.2,.7,.2,1)') => ({ duration, delay: delay + extra, easing, fill: 'both' });
-      // pen line traces the outline fast, then thins out as the ink arrives
-      job.anims.push(text.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], opts(320, 0, 'cubic-bezier(.25,.6,.3,1)')));
-      job.anims.push(text.animate([{ strokeOpacity: 1 }, { strokeOpacity: 1, offset: 0.55 }, { strokeOpacity: 0 }], opts(520)));
-      job.anims.push(text.animate([{ fillOpacity: 0 }, { fillOpacity: 1 }], opts(240, 140, 'ease-out')));
-      // a soft glow and a small settle, both gone by the time the overlay is removed
-      job.anims.push(svg.animate([{ filter: glow(1), transform: 'translateY(0.05em) scale(1.04)' }, { filter: glow(0), transform: 'none' }], opts(560)));
-      const tok = m.g.closest('.tok');
-      if (!first.has(tok)) first.set(tok, delay);
+    whole.remove();
+    letters.forEach((l, j) => {
+      if (!/\S/.test(l.ch)) return;
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', l.x);
+      t.setAttribute('y', base);
+      t.textContent = l.ch;
+      // A generous guess at the outline's length: an overestimate only shifts the timing a little.
+      t.style.setProperty('--len', Math.ceil(4 * (l.wd + size * 0.8) + 10));
+      t.style.setProperty('--d', `${Math.round(d0 + j * LETTER_MS)}ms`);
+      g.append(t);
     });
-    for (const [tok, delay] of first) {
-      const py = tok.querySelector('.py');
-      if (py) job.anims.push(py.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
-        { duration: 260, delay: delay + 160, easing: 'ease-out', fill: 'both' }));
-    }
-    Promise.all(job.anims.map((a) => a.finished)).then(() => { if (drawing === job) stopDrawing(); }).catch(() => {});
+    w.classList.add('writing');
   }
+
+  function writeSentence() {
+    clearInk();
+    if (reduceMotion.matches) return;
+    sentenceEl.querySelectorAll('.tok').forEach((tok, i) => {
+      const d0 = i * WORD_MS;
+      const py = tok.querySelector('.py.wr');
+      if (py) writeRun(py, d0);
+      tok.querySelectorAll('.hz .wr').forEach((c, j) => writeRun(c, d0 + j * LETTER_MS));
+    });
+  }
+  // If the window is resized the text reflows, so the plain text (which moves with it) takes over from the copies.
+  addEventListener('resize', clearInk);
 
   // ---------- focus levels ----------
   function crumbs() {
@@ -301,7 +290,6 @@
   }
 
   function push(entry, fromRect) {
-    stopDrawing();
     stack.push(entry);
     renderId++;
     renderFocus(fromRect);
@@ -584,7 +572,6 @@
   sentenceEl.addEventListener('click', (e) => {
     const el = e.target.closest('.tok.word, .tok.char');
     if (!el) return;
-    stopDrawing();
     const [si, ti] = el.dataset.ref.split(':').map(Number);
     const t = current.sentences[si].tokens[ti];
     const syl = t.py && t.py.includes(' ') ? t.py.split(' ') : null;
@@ -629,7 +616,7 @@
     settings[key] = !settings[key];
     save();
     applySettings();
-    if ((key === 'trad' || key === 'english') && current) {
+    if (key === 'trad' && current) {
       renderContent();
       if (stack.length) renderFocus(null);
     }
