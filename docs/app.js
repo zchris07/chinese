@@ -96,6 +96,7 @@
 
   // ---------- sentence level ----------
   function renderContent() {
+    sentenceEl.classList.remove('unwriting');
     sentenceEl.innerHTML = '';
     current.sentences.forEach((s, si) => {
       s.tokens.forEach((tok, ti) => {
@@ -123,17 +124,27 @@
     updateMarkUI();
   }
 
-  // Show a sentence: fade the old one out, then write the new one in.
+  // Show a sentence: the old one dissolves (unwrites), and the new one is written in as it finishes.
+  // Asking again while a change is still running hurries it, as scrolling quickly does in football explained.
+  let changing = false;
   async function present(next) {
     if (stack.length) closeFocus(false);
     const id = ++renderId;
+    const k = changing ? 0.35 : 1;
+    changing = true;
     stage.classList.add('swap');
-    await Promise.all([fontsFor(next.raw.s + (next.raw.t || '')), new Promise((r) => setTimeout(r, 120))]);
+    let wait = 120;
+    if (current && !reduceMotion.matches && !sentenceEl.classList.contains('unwriting')) {
+      const last = writeOut(k);
+      wait = Math.min(last, 600 * k) + (UNWRITE_MS - 125) * k;
+    }
+    await Promise.all([fontsFor(next.raw.s + (next.raw.t || '')), new Promise((r) => setTimeout(r, wait))]);
     if (id !== renderId) return;
     current = next;
     renderContent();
     writeSentence();
     stage.classList.remove('swap');
+    changing = false;
   }
 
   async function nextSentence() {
@@ -148,22 +159,38 @@
     present(next);
   }
 
-  // ---------- writing in ----------
+  // ---------- writing in and out ----------
   // The stroop writing, as in football explained and freestyle: an SVG copy of each run (a character, or a token's
-  // pinyin) is laid exactly over it, one <text> per letter. Each letter's outline is stroked on (one dash and an
-  // endless gap, so no part of it can vanish and come back), then inked. Tokens start 1/60 s apart, letters 14 ms.
-  // The written copy stays on screen (handing back to the plain text would change the weight at the last moment)
-  // and takes the element's colour, so hovers still work. A re-render or a resize clears it.
+  // pinyin) is laid exactly over it, one letter at a time. Writing in, each letter's outline is stroked on (one dash
+  // and an endless gap, so no part of it can vanish and come back), then inked. Unwriting runs it backward: the ink
+  // drains back to the outline, then the outline unwinds while the letter drifts loose and fades. Tokens start
+  // 1/60 s apart, letters 14 ms. The written copy stays on screen (handing back to the plain text would change the
+  // weight at the last moment) and takes the element's colour, so hovers still work. A re-render or resize clears it.
+  //
+  // Chinese fonts build a character from overlapping stroke shapes, so its raw outline has lines inside the glyph.
+  // Each outline is masked by its own filled glyph: only the outer border (and real holes, like inside 口) is drawn.
   const WORD_MS = 1000 / 60;
   const LETTER_MS = 14;
+  const UNWRITE_MS = 625;
+  let maskId = 0;
 
   function clearInk() {
+    if (sentenceEl.classList.contains('unwriting')) return;
     sentenceEl.querySelectorAll('.wr.writing').forEach((w) => { w.classList.remove('writing'); w.querySelector('svg')?.remove(); });
   }
 
-  function writeRun(w, d0) {
+  const svgEl = (tag, attrs, parent) => {
+    const n = document.createElementNS(NS, tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    parent.append(n);
+    return n;
+  };
+
+  // Lays the copy over one run and returns the delay of its last letter. kind: 'in' (write) or 'out' (unwrite).
+  function writeRun(w, d0, kind = 'in', k = 1) {
+    w.querySelector('svg')?.remove();
     const box = w.getBoundingClientRect();
-    if (!box.width) return;
+    if (!box.width) return 0;
     // The run's baseline, read from the page's own layout (an empty inline box sits on it).
     const probe = document.createElement('span');
     probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
@@ -173,18 +200,12 @@
     const cs = getComputedStyle(w);
     const size = parseFloat(cs.fontSize);
     const text = w.firstChild.textContent;
-    const g = document.createElementNS(NS, 'svg');
-    g.setAttribute('width', box.width);
-    g.setAttribute('height', box.height);
-    g.setAttribute('aria-hidden', 'true');
+    const g = svgEl('svg', { width: box.width, height: box.height, 'aria-hidden': 'true', class: kind }, w);
     Object.assign(g.style, { fontFamily: cs.fontFamily, fontWeight: cs.fontWeight, fontSize: cs.fontSize, letterSpacing: cs.letterSpacing });
-    w.append(g);
+    g.style.setProperty('--k', k);
     // Each letter goes exactly where the whole run would put it, so spacing is kept.
-    const whole = document.createElementNS(NS, 'text');
-    whole.setAttribute('x', 0);
-    whole.setAttribute('y', base);
+    const whole = svgEl('text', { x: 0, y: base }, g);
     whole.textContent = text;
-    g.append(whole);
     let at = 0;
     const letters = [...text].map((ch) => {
       const l = { ch, x: whole.getStartPositionOfChar(at).x, wd: whole.getExtentOfChar(at).width };
@@ -192,29 +213,54 @@
       return l;
     });
     whole.remove();
+    const defs = svgEl('defs', {}, g);
+    let last = 0;
     letters.forEach((l, j) => {
       if (!/\S/.test(l.ch)) return;
-      const t = document.createElementNS(NS, 'text');
-      t.setAttribute('x', l.x);
-      t.setAttribute('y', base);
-      t.textContent = l.ch;
+      const id = `ink-mask-${++maskId}`;
+      const mask = svgEl('mask', { id, maskUnits: 'userSpaceOnUse', x: l.x - size, y: base - 2 * size, width: l.wd + 2 * size, height: 3 * size }, defs);
+      svgEl('rect', { x: l.x - size, y: base - 2 * size, width: l.wd + 2 * size, height: 3 * size, fill: 'white' }, mask);
+      svgEl('text', { x: l.x, y: base, fill: 'black' }, mask).textContent = l.ch;
+      const letter = svgEl('g', { class: 'lt' }, g);
       // A generous guess at the outline's length: an overestimate only shifts the timing a little.
-      t.style.setProperty('--len', Math.ceil(4 * (l.wd + size * 0.8) + 10));
-      t.style.setProperty('--d', `${Math.round(d0 + j * LETTER_MS)}ms`);
-      g.append(t);
+      letter.style.setProperty('--len', Math.ceil(4 * (l.wd + size * 0.8) + 10));
+      const d = (d0 + j * LETTER_MS) * k;
+      last = Math.max(last, d);
+      letter.style.setProperty('--d', `${Math.round(d)}ms`);
+      if (kind === 'out') {
+        // As it comes apart, each letter drifts a little and turns, so the word breaks up rather than simply fading.
+        const r = (lo, hi) => (lo + Math.random() * (hi - lo)).toFixed(1);
+        letter.style.setProperty('--dx', `${r(-3, 3)}px`);
+        letter.style.setProperty('--dy', `${r(-7, -2)}px`);
+        letter.style.setProperty('--r', `${r(-10, 10)}deg`);
+      }
+      svgEl('text', { x: l.x, y: base, class: 'fi' }, letter).textContent = l.ch;
+      svgEl('text', { x: l.x, y: base, class: 'ol', mask: `url(#${id})` }, letter).textContent = l.ch;
     });
     w.classList.add('writing');
+    return last;
   }
 
-  function writeSentence() {
-    clearInk();
-    if (reduceMotion.matches) return;
+  function eachRun(fn) {
     sentenceEl.querySelectorAll('.tok').forEach((tok, i) => {
       const d0 = i * WORD_MS;
       const py = tok.querySelector('.py.wr');
-      if (py) writeRun(py, d0);
-      tok.querySelectorAll('.hz .wr').forEach((c, j) => writeRun(c, d0 + j * LETTER_MS));
+      if (py) fn(py, d0);
+      tok.querySelectorAll('.hz .wr').forEach((c, j) => fn(c, d0 + j * LETTER_MS));
     });
+  }
+
+  function writeSentence() {
+    if (reduceMotion.matches) return;
+    eachRun((w, d0) => writeRun(w, d0, 'in'));
+  }
+
+  // Unwrites the sentence on screen, in the order it was written; returns the delay of its last letter.
+  function writeOut(k) {
+    let last = 0;
+    eachRun((w, d0) => { last = Math.max(last, writeRun(w, d0, 'out', k)); });
+    sentenceEl.classList.add('unwriting');
+    return last;
   }
   // If the window is resized the text reflows, so the plain text (which moves with it) takes over from the copies.
   addEventListener('resize', clearInk);

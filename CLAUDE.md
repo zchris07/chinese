@@ -29,8 +29,9 @@ Other languages may come later, so keep the data model language-agnostic
   other words containing it.
 - Click-away / Escape steps back out one level.
 - A pipeline-built sentence pool of a few thousand sentences is enough.
-- **Writing-in animation** on every new sentence: the stroop writing used in football explained and freestyle
-  (each letter's outline stroked on, then inked), for the characters and their pinyin.
+- **Writing in and out** on every new sentence: the stroop writing used in football explained and freestyle. The old
+  sentence dissolves (ink drains to the outline, the outline unwinds, letters drift loose and fade), then the new one
+  is written in (outer outline stroked on, then inked), for the characters and their pinyin.
 - **English lookup** (`/` or the Look up button): type English, get Chinese words as you type; a result opens the
   normal word view (and drills into characters).
 - **Bookmarks** (`B` or ☆): save the sentence, word or character on screen; the Saved panel lists and reopens them.
@@ -159,13 +160,18 @@ local translation) → `python scripts/wiki/download.py` → `python scripts/mer
   the owner's request); each sentence's `source` record is still in the pool data.
 - **No text cursor or selection** anywhere except the search box: `body { cursor: default; user-select: none }`,
   `input` opts back in. Clickable things keep `cursor: pointer`.
-- **Writing-in** (`writeSentence` / `writeRun` in `app.js`, CSS `.wr`): ported from football explained / freestyle.
-  Each run (a character `.c.wr`, or a token's pinyin `.py.wr`) gets an SVG copy laid on its baseline (zero-size probe),
-  one `<text>` per letter at the position the whole run would give it. Each letter's outline is stroked on (1.1 px,
-  `stroke-dasharray: var(--len) 100000`, 0.575 s) and inked 240 ms later (0.375 s). Tokens start 1/60 s apart,
-  letters 14 ms. The real text (`.wt`) is transparent meanwhile; the written copy then stays on screen and follows the
-  element's colour (hovers work). A re-render or a window resize hands back to the plain text;
-  `prefers-reduced-motion` skips it. Fonts are loaded for the sentence first.
+- **Writing in / out** (`writeRun`, `writeSentence`, `writeOut`, `present` in `app.js`; CSS `.wr`): ported from
+  football explained / freestyle. Each run (a character `.c.wr`, or a token's pinyin `.py.wr`) gets an SVG copy laid on
+  its baseline (zero-size probe), one letter group per letter at the position the whole run would give it: an ink
+  `<text class="fi">` and an outline `<text class="ol">` (`stroke-dasharray: var(--len) 100000`). The outline is
+  masked by its own filled glyph (per-letter `<mask>`), at twice the width, so only the outer border shows: CJK fonts
+  build glyphs from overlapping stroke shapes, and without the mask their inner lines would be drawn; it also keeps the
+  outline off the ink, so semi-transparent pinyin does not flash. In: outline drawn 0.575 s, ink from +240 ms over
+  0.375 s while the outline fades. Out: ink drains 0.175 s, then from +125 ms the outline unwinds and the letter drifts
+  (random --dx/--dy/--r) and fades over 0.45 s. Tokens start 1/60 s apart, letters 14 ms. `present` unwrites the old
+  sentence and writes the new one in once it is nearly gone (`min(last, 600) + 500` ms); asking again mid-change uses
+  `--k` 0.35 to hurry, as fast scrolling does in football explained. The written copy stays and follows the element's
+  colour (hovers work); a re-render or a resize hands back to plain text; `prefers-reduced-motion` skips both.
 - **Lookup ranking** (`search` in `app.js`): a token index over English senses; the last word is a prefix while
   typing; filler words (to/a/an/the) are ignored; each `;`/`,` part of a sense is scored (exact > starts with >
   contains), then by sense order, length, HSK level and frequency. Chinese input matches the word itself.
