@@ -99,6 +99,10 @@
     sentenceEl.classList.remove('unwriting');
     sentenceEl.innerHTML = '';
     current.sentences.forEach((s, si) => {
+      // Trailing punctuation (。 ？ ” …) sits in a zero-width tail: the line is centred on the words alone.
+      let tailFrom = s.tokens.length;
+      while (tailFrom > 0 && s.tokens[tailFrom - 1].kind === 'punct') tailFrom--;
+      let tail = null;
       s.tokens.forEach((tok, ti) => {
         const el = document.createElement('span');
         const live = tok.kind === 'word' || tok.kind === 'char';
@@ -114,7 +118,10 @@
         const glyphs = [...show(tok.w, tok.t)].map((c) => `<span class="c wr"><span class="wt">${esc(c)}</span></span>`).join('');
         const pinyin = py ? `<span class="py wr"><span class="wt">${esc(py)}</span></span>` : '<span class="py">&nbsp;</span>';
         el.innerHTML = `${pinyin}<span class="hz">${glyphs}</span>`;
-        sentenceEl.appendChild(el);
+        if (ti >= tailFrom && tailFrom > 0) {
+          tail ??= sentenceEl.appendChild(Object.assign(document.createElement('span'), { className: 'tail' }));
+          tail.appendChild(el);
+        } else sentenceEl.appendChild(el);
       });
     });
     const en = current.sentences.map((s) => s.en).filter(Boolean).join(' ');
@@ -147,6 +154,26 @@
     changing = false;
   }
 
+  // Every sentence shown is kept: ← / ‹ steps back through them, → steps forward (or to a new one at the end).
+  // A new sentence (Space) is always added at the end, so nothing seen is lost.
+  const seen = [];
+  let at = -1;
+  function remember(entry) {
+    seen.push(entry);
+    if (seen.length > 300) seen.shift();
+    at = seen.length - 1;
+    updateHistoryUI();
+  }
+  function step(dir) {
+    if (dir < 0 && at > 0) { at--; present(seen[at]); }
+    else if (dir > 0 && at < seen.length - 1) { at++; present(seen[at]); }
+    else if (dir > 0) { nextSentence(); return; }
+    updateHistoryUI();
+  }
+  function updateHistoryUI() {
+    $('prev').disabled = at <= 0;
+  }
+
   async function nextSentence() {
     let next;
     try {
@@ -156,6 +183,7 @@
       stage.classList.remove('swap');
       return;
     }
+    remember(next);
     present(next);
   }
 
@@ -580,7 +608,9 @@
     unpack(m.pack);
     closePanel();
     if (m.kind === 'sentence') {
-      present({ raw: m.s, sentences: [m.s], source: m.s.source });
+      const entry = { raw: m.s, sentences: [m.s], source: m.s.source };
+      remember(entry);
+      present(entry);
       return;
     }
     if (stack.length) closeFocus(false);
@@ -657,6 +687,7 @@
   $('b-lookup').addEventListener('click', () => openPanel('lookup'));
   $('b-saved').addEventListener('click', () => openPanel('saved'));
   $('save-sentence').addEventListener('click', () => { if (!stack.length) toggleMark(); });
+  $('prev').addEventListener('click', () => step(-1));
 
   function toggle(key) {
     settings[key] = !settings[key];
@@ -681,7 +712,7 @@
     nextSentence();
   });
   // Buttons should never keep focus, so Space can't re-trigger them.
-  document.querySelectorAll('.controls button, #next, #save-sentence').forEach((b) => b.addEventListener('click', () => b.blur()));
+  document.querySelectorAll('.controls button, #next, #save-sentence, #prev').forEach((b) => b.addEventListener('click', () => b.blur()));
 
   window.addEventListener('keydown', (e) => {
     if (!panel.hidden) {
@@ -702,6 +733,9 @@
       if (!e.repeat) nextSentence();
     } else if (e.key === 'Escape') {
       pop();
+    } else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !stack.length && !e.altKey && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      if (!e.repeat) step(e.key === 'ArrowLeft' ? -1 : 1);
     } else if (e.key === 'Enter' && e.target.matches('.tok, .ch')) {
       e.preventDefault();
       e.target.click();

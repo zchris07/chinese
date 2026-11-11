@@ -62,7 +62,7 @@ body {
 /* Sentence level */
 #stage {
   position: fixed; inset: 0;
-  display: flex; overflow-y: auto;
+  display: flex; overflow-y: auto; overflow-x: hidden;
   padding: 72px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px));
   text-align: center;
   transition: opacity var(--t), filter var(--t);
@@ -91,6 +91,8 @@ body {
 }
 body.pinyin .tok .py { display: block; }
 .tok.punct { color: var(--ink-soft); }
+/* trailing punctuation hangs past the line (renderContent): zero width, so the words alone are centred */
+.sentence .tail { display: inline-flex; align-items: flex-end; width: 0; overflow: visible; white-space: nowrap; }
 
 .tok.word, .tok.char { cursor: pointer; }
 .tok .hz { transition: color 140ms ease, text-shadow 140ms ease; }
@@ -127,7 +129,9 @@ body.english .translation { visibility: visible; }
   border: 2px solid rgba(255, 255, 255, 0.55); cursor: pointer;
   transition: background 140ms ease, color 140ms ease, transform 140ms ease;
 }
-.star:hover { border-color: var(--ink); }
+.star:hover:not(:disabled) { border-color: var(--ink); }
+.star:disabled { opacity: 0.3; cursor: default; }
+#prev span { display: inline-block; font-size: 1.5em; line-height: 0; transform: translateY(-0.06em); }
 .star[aria-pressed='true'] { background: var(--ink); color: var(--jade-deep); border-color: var(--ink); }
 .star:active { transform: scale(0.94); }
 .star:focus-visible { outline: 3px solid var(--jade-deep); outline-offset: 3px; }

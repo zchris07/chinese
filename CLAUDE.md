@@ -17,7 +17,8 @@ Other languages may come later, so keep the data model language-agnostic
 
 **In scope**
 - Jade-green backdrop, white centered sentence, nothing else cluttering the screen.
-- New random sentence on **Space** or a button click.
+- New random sentence on **Space** or a button click; **←** / the ‹ button goes back through earlier sentences,
+  **→** forward again (or to a new one at the end).
 - Difficulty selector with five tiers: **Simple, Ordinary, Complex, Advanced, Scholar** (see Sentence pool).
 - Toggles: pinyin, simplified/traditional, English translation.
 - Hover a word/character → its text changes shade. Multi-character words highlight
@@ -156,7 +157,9 @@ local translation) → `python scripts/wiki/download.py` → `python scripts/mer
     word plus every word the pool uses (15k), and `chars: {char: meaning}`
 - **UI:** the zoom is a stack (`word` → `char` → related `word` → …). Esc or click-away pops one level; Space or the
   big button gives a new sentence. A single click/tap on a word opens it. Glyphs fly between levels with a FLIP
-  transform. Keys: P pinyin, S script, E English, / lookup, B save. No source caption and no credits page (removed at
+  transform. Keys: P pinyin, S script, E English, / lookup, B save, ← / → history. History (`seen`, `at`, `step`):
+  every sentence shown is kept (up to 300); a new one is always appended, so going back never loses anything.
+  Trailing punctuation is wrapped in a zero-width `.tail`, so each line is centred on its words and the 。 hangs past. No source caption and no credits page (removed at
   the owner's request); each sentence's `source` record is still in the pool data.
 - **No text cursor or selection** anywhere except the search box: `body { cursor: default; user-select: none }`,
   `input` opts back in. Clickable things keep `cursor: pointer`.
